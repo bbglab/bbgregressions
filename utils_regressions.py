@@ -467,7 +467,7 @@ def plot_linreg_coeffs(coeffs_df, lowi_df, highi_df, pvals_df,
 
 keyword2title = {
     # methods
-    'mutrate': "Mutation rate",
+    'mutdensity': "Mutation density",
     'mutreadsrate': "Mutated reads rate",
     'oncodrivefml': "OncodriveFML",
     'omega': "Omega",
@@ -506,7 +506,7 @@ keyword2title = {
     'truncating': 'truncating',
     'truncatingplus': 'truncating and splice',
 
-    # mutrate: mutations used
+    # mutation density: mutations used
     'snv': 'SNVs',
     'alltypes': 'all mutation types',
     'complex-deletion-insertion-mnv': 'indels, MNVs and complex mutations',
