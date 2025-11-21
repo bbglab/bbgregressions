@@ -15,6 +15,8 @@ def add_totals(data: pd.DataFrame,
 
     if method == "included":
         print("Method: included. The totals for each {ttype} are already in the data")
+    elif method == "none":
+        print("Method: none. The totals for each {ttype} won't be included")
     else:
         if method == "sum":
             total = data.sum(axis = axis, skipna = True).to_frame(f"total_{opposite_ttype}")
