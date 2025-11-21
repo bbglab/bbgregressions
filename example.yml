@@ -1,0 +1,26 @@
+metrics:
+  metric_1:
+    metric: "mutdensity"
+    file: "/data/bbg/nobackup/bladder_ts/results/2025-11-16_deepCSA_updated_run/mutdensity/all_mutdensities.tsv"
+    region: 
+      - "protein_affecting"
+      - "non_protein_affecting"
+    muttype: 
+      - "snv"
+    elements_total_by: "included"
+    samples_total_by: "included"
+
+  metric_2:
+    metric: "mutreadsdensity"
+    file: "/data/bbg/nobackup/bladder_ts/results/2025-11-16_deepCSA_updated_run/mutdensity/all_mutdensities.tsv"
+    region: 
+      - "protein_affecting"
+      - "non_protein_affecting"
+    muttype: 
+      - "snv"
+    elements_total_by: "included"
+    samples_total_by: "included"
+
+globals:
+  output_dir: "/path/to/dir"
+  handle_na: "mean"
