@@ -26,17 +26,17 @@ def bbgregressions():
 @bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
                 help="Build input tables")
 @click.option('--option1-example', type=click.Choice(['', '', '']), default = 'hg38', help='')
-@click.option('--option2-example', type=click.Path(exists=True), help='')
+@click.option('-config', '--config_file', type=click.Path(exists=True), help='')
 @click.option('--option2-example', type=click.STRING, default = None, help='')
 @setup_logging_decorator
-def create_input(args):
+def create_input(config_file):
     """Build formatted input tables to run regressions"""
     startup_message(__version__, "Initializing input formatting...")
 
     logger.info("example message")
     logger.info(f"example message: {laa}")
 
-    create_input_main(args)
+    create_input_main(config_file)
 
 
 @omega.command(context_settings=dict(help_option_names=['-h', '--help']),
