@@ -4,7 +4,8 @@ from bbgregressions.create_input.schemas.clonalstructure import *
 from bbgregressions.create_input.formatter import formatter
 
 
-def mutdensity(config: dict) -> pd.DataFrame:
+def mutdensity(config: dict,
+            output_dir: str) -> pd.DataFrame:
     """
     Reads and filters mutdensity and mutreadsdensity
     data from deepCSA. Calls formatter to produce
@@ -19,13 +20,16 @@ def mutdensity(config: dict) -> pd.DataFrame:
     
     # load data
     data = pd.read_csv(config["file"], sep = "\t")
+    data = data.rename({"GENE": "element", "SAMPLE_ID": "sample"}, axis = 1)
 
     # read filters
-    metric = f'{config["metric"].upper()}_MB'
-    metric = f'{config["metric"].upper()}_ADJUSTED' if config["adjust"] == "yes" else metric
-    regions = MUTDENSITY_REGIONS if not config["regions"] else config["regions"]
-    muttypes = MUTDENSITY_MUTTYPES.values() if not config["muttypes"] else [
-    MUTDENSITY_MUTTYPES[muttype] for muttype in config["muttypes"] ]
+    metric = f'{config["metric_name"].upper()}_MB'
+    metric = f'{config["metric_name"].upper()}_ADJUSTED' if config["adjust"] == "yes" else metric
+    regions = MUTDENSITY_REGIONS if not config["region"] else config["region"]
+    muttypes = MUTDENSITY_MUTTYPES.values() if not config["muttype"] else [
+    MUTDENSITY_MUTTYPES[muttype] for muttype in config["muttype"] ]
+    elements = data["element"].unique() if not config["elements"] else config["elements"]
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
 
     # filter data and prepare for formatter
     for region in regions:
@@ -33,13 +37,13 @@ def mutdensity(config: dict) -> pd.DataFrame:
             
             data_f = data.loc[(data["REGIONS"] == region) &
                             (data["MUTTYPES"] == muttype)]
-            data_f = data_f.rename({"GENE": "element", "SAMPLE_ID": "sample"}, axis = 1)
 
             formatter(data = data_f,
                     metric = metric,
                     config = config,
-                    elements = config["elements"],
-                    samples = config["samples"])
+                    elements = elements,
+                    samples = samples,
+                    output_dir = output_dir)
 
     return None
 

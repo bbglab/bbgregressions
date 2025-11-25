@@ -67,6 +67,8 @@ def startup_message(version, initializing_text):
 #  Configuration
 # ==============
 
-HANDLE_NA = ["ignore", "mean", "all_samples"]
-ELEMENTS_TOTAL_BY = ["none", "included", "sum", "mean", "median"]
-SAMPLES_TOTAL_BY = ["none", "included", "sum", "mean", "median"]
+GENERAL_CONFIG_OPTIONS = {
+    "handle_na" : ["ignore", "mean", "all_samples"],
+    "elements_total_by" : ["none", "included", "sum", "mean", "median"],
+    "samples_total_by" : ["none", "included", "sum", "mean", "median"],
+}

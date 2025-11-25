@@ -4,7 +4,7 @@ def clean_nan(data: pd.DataFrame) -> pd.DataFrame:
     """
     """
     print("QC: missing values")
-    elements2remove = data.loc[data.isna().all(axis = 1)].index
+    elements2remove = data.loc[data.isna().all(axis = 1)].index.tolist()
     if elements2remove:
         print("All NA for the following elements. Removed from the analysis:")
         print(elements2remove)
@@ -18,7 +18,7 @@ def clean_reps(data: pd.DataFrame) -> pd.DataFrame:
     """
     """
     print("QC: identical values")
-    elements2remove = data.loc[data.nunique(axis = 1) == 1].index
+    elements2remove = data.loc[data.nunique(axis = 1) == 1].index.tolist()
     if elements2remove:
         print("Identical values across samples for the following elements. Removed from the analysis:")
         print(elements2remove)
