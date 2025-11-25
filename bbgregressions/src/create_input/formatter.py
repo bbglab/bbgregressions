@@ -1,8 +1,8 @@
 import pandas as pd
 import os
 
-from bbbregressions.create_inputs.cleaner import *
-from bbbregressions.create_inputs.addon import *
+from bbbregressions.src.create_input.cleaner import clean_nan, clean_reps, handle_nan
+from bbbregressions.src.create_input.addon import add_totals
 
 def formatter(data: pd.DataFrame,
             metric: str,

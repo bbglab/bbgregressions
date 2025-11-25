@@ -5,16 +5,14 @@ import daiquiri
 
 from bbgregressions import __logger_name__, __version__
 
-from bbgregressions.src.create_input.main   import main as create_input_main
-from bbgregressions.src.regressions.main    import main as regressions_main
-from bbgregressions.src.plot.main           import main as plot_main
+from bbgregressions.bbgregressions.create_input.main   import main as create_input_main
+from bbgregressions.bbgregressions.regressions.main    import main as regressions_main
+from bbgregressions.bbgregressions.plot.main           import main as plot_main
 
-from bbgregressions.src.globals             import DATE, setup_logging_decorator, startup_message
+from bbgregressions.bbgregressions.globals             import DATE, setup_logging_decorator, startup_message
 
 logger = daiquiri.getLogger(__logger_name__)
 
-
-# TODO: os.makedirs(output_dir, exist_ok = True) somewhere
 
 @click.group(context_settings={'help_option_names': ['-h', '--help']})
 @click.version_option(__version__)
@@ -25,21 +23,20 @@ def bbgregressions():
 
 @bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
                 help="Build input tables")
-@click.option('--option1-example', type=click.Choice(['', '', '']), default = 'hg38', help='')
 @click.option('-config', '--config_file', type=click.Path(exists=True), help='')
-@click.option('--option2-example', type=click.STRING, default = None, help='')
 @setup_logging_decorator
 def create_input(config_file):
     """Build formatted input tables to run regressions"""
     startup_message(__version__, "Initializing input formatting...")
 
+    test_message = "idk"
     logger.info("example message")
-    logger.info(f"example message: {laa}")
+    logger.info(f"example message: {test_message}")
 
     create_input_main(config_file)
 
 
-@omega.command(context_settings=dict(help_option_names=['-h', '--help']),
+@bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
                         help="Run regressions")
 @click.option('--option1-example', type=click.Choice(['', '', '']), default = 'hg38', help='')
 @click.option('--option2-example', type=click.Path(exists=True), help='')
@@ -54,7 +51,7 @@ def regressions(args):
     regressions_main(args)
 
 
-@omega.command(context_settings=dict(help_option_names=['-h', '--help']),
+@bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
                         help="Plot results")
 @click.option('--option1-example', type=click.Choice(['', '', '']), default = 'hg38', help='')
 @click.option('--option2-example', type=click.Path(exists=True), help='')

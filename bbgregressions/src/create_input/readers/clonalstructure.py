@@ -1,7 +1,7 @@
 import pandas as pd
 
-from bbgregressions.create_inputs.schemas.clonalstructure import *
-from bbbregressions.create_inputs.formatter import formatter
+from bbgregressions.bbgregressions.create_input.schemas.clonalstructure import *
+from bbbregressions.src.create_input.formatter import formatter
 
 
 def mutdensity(config: dict) -> pd.DataFrame:
