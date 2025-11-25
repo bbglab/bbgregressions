@@ -3,13 +3,13 @@
 import click
 import daiquiri
 
-# from omega import __logger_name__, __version__
+from bbgregressions import __logger_name__, __version__
 
-from bbgregressions.create_input.main   import main as create_input_main
-from bbgregressions.regressions.main    import main as regressions_main
-from bbgregressions.plot.main           import main as plot_main
+from bbgregressions.src.create_input.main   import main as create_input_main
+from bbgregressions.src.regressions.main    import main as regressions_main
+from bbgregressions.src.plot.main           import main as plot_main
 
-# from omega.src.globals              import DATE, setup_logging_decorator, startup_message
+from bbgregressions.src.globals             import DATE, setup_logging_decorator, startup_message
 
 logger = daiquiri.getLogger(__logger_name__)
 
@@ -65,7 +65,7 @@ def plot(args):
 
     logger.info("example message")
     logger.info(f"example message: {laa}")
-    mutabilities_main(args)
+    plot_main(args)
 
 
 if __name__ == "__main__":
