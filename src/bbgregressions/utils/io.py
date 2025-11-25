@@ -1,13 +1,12 @@
 """
 Small I/O helpers for the bbgregressions package.
 """
-from typing import Any
 import os
 import gzip
 import yaml
 
 
-def read_yaml(path: str) -> Any:
+def read_yaml(path: str) -> None:
     """
     Read a YAML file (supports .gz) and return the parsed object.
     """

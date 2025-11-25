@@ -1,8 +1,8 @@
 import os
 
-from bbgregressions.bbgregressions.utils.io import read_yaml
-from bbgregressions.bbgregressions.create_input.readers.clonalstructure import *
-from bbgregressions.bbgregressions.create_input.schemas.globals import METRIC2READER
+from bbgregressions.utils.io import read_yaml
+from bbgregressions.create_input.readers.clonalstructure import *
+from bbgregressions.create_input.schemas.globals import METRIC2READER
 
 def main(config_file: str) -> None:
     """
