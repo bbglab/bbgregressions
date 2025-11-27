@@ -72,3 +72,8 @@ GENERAL_CONFIG_OPTIONS = {
     "elements_total_by" : ["none", "included", "sum", "mean", "median"],
     "samples_total_by" : ["none", "included", "sum", "mean", "median"],
 }
+
+CONFIG_TEMPLATE_GENERAL = {
+    "output_dir": "/path/to/dir",
+    "handle_na": f"select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])}"
+}

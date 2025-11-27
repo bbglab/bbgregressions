@@ -5,11 +5,12 @@ import daiquiri
 
 from bbgregressions import __logger_name__, __version__
 
-from bbgregressions.create_input.main   import main as create_input_main
+from bbgregressions.config_template.main import main as create_config_main
+from bbgregressions.create_input.main    import main as create_input_main
 # from bbgregressions.regressions.main    import main as regressions_main
 # from bbgregressions.plot.main           import main as plot_main
 
-from bbgregressions.globals             import setup_logging_decorator, startup_message
+from bbgregressions.globals              import setup_logging_decorator, startup_message
 
 logger = daiquiri.getLogger(__logger_name__)
 
@@ -19,6 +20,20 @@ logger = daiquiri.getLogger(__logger_name__)
 def bbgregressions():
     """bbgregressions: software for customized regression models"""
     pass
+
+@bbgregressions.command(name='config_template',
+                        context_settings=dict(help_option_names=['-h', '--help']),
+                        help="Creates a template for your configuration based on the metrics you \
+                            want to analyze")
+@click.option('--metrics', type=click.STRING,
+            callback=lambda ctx, param, value: [x.strip() for x in value.split(",")],
+            help='Metrics you want to analyze')
+@setup_logging_decorator
+def create_config_template(metrics):
+    """Config template to run regressions"""
+    startup_message(__version__, "Pre-analysis: create template for config\n")
+    
+    create_config_main(metrics)
 
 
 @bbgregressions.command(name='create_input',
