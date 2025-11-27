@@ -1,8 +1,13 @@
 import pandas as pd
 import os
+import daiquiri
 
 from bbgregressions.create_input.cleaner import clean_nan, clean_reps, handle_nan
 from bbgregressions.create_input.addon import add_totals
+
+from bbgregressions import __logger_name__
+
+logger = daiquiri.getLogger(__logger_name__)
 
 def formatter(data: pd.DataFrame,
             metric: str,
@@ -32,9 +37,9 @@ def formatter(data: pd.DataFrame,
     data_ok = handle_nan(data_ts, config)
 
     # save 
-    output_dir = os.path.join(output_dir, "input")
-    os.makedirs(output_dir, exist_ok = True)
     file = os.path.join(output_dir, f"{metric.lower()}.tsv")
+    logger.info(f"Input generated for {metric}")
     data_ok.to_csv(file, sep = "\t")
+    logger.info(f"Saved as {file}")
     
     return None

@@ -1,11 +1,17 @@
 import pandas as pd
 
+import daiquiri
+
+from bbgregressions import __logger_name__
+
+logger = daiquiri.getLogger(__logger_name__)
+
 def add_totals(data: pd.DataFrame,
             ttype: str,
             method: str) -> pd.DataFrame:
     """
     """
-    print(f"ADD: total for each {ttype}")
+    logger.info(f"ADD: total for each {ttype}")
     if ttype == "element":
         axis = 1
         opposite_ttype = "sample"
@@ -14,9 +20,9 @@ def add_totals(data: pd.DataFrame,
         opposite_ttype = "element"
 
     if method == "included":
-        print("Method: included. The totals for each {ttype} are already in the data")
+        logger.info("Method: included. The totals for each {ttype} are already in the data")
     elif method == "none":
-        print("Method: none. The totals for each {ttype} won't be included")
+        logger.info("Method: none. The totals for each {ttype} won't be included")
     else:
         if method == "sum":
             total = data.sum(axis = axis, skipna = True).to_frame(f"total_{opposite_ttype}")
@@ -30,7 +36,7 @@ def add_totals(data: pd.DataFrame,
         elif opposite_ttype == "element":
             data = pd.concat([data, total], ignore_index = True)
 
-        print(f"Method: {method}. The totals for each {ttype} are calculated as the {method} of all {opposite_ttype}s")
+        logger.info(f"Method: {method}. The totals for each {ttype} are calculated as the {method} of all {opposite_ttype}s")
     
     return data
 

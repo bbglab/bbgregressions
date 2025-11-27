@@ -1,30 +1,36 @@
 import pandas as pd
+import daiquiri
+
+from bbgregressions import __logger_name__
+
+logger = daiquiri.getLogger(__logger_name__)
+
 
 def clean_nan(data: pd.DataFrame) -> pd.DataFrame:
     """
     """
-    print("QC: missing values")
+    logger.info("QC: missing values")
     elements2remove = data.loc[data.isna().all(axis = 1)].index.tolist()
     if elements2remove:
-        print("All NA for the following elements. Removed from the analysis:")
-        print(elements2remove)
+        logger.info(f"All NA for the following elements: {elements2remove}")
+        logger.info("Elements removed from the analysis")
         data = data.dropna(how = "all", axis = 0)
     else:
-        print("All the elements have at least one no NA value. Kept.")
+        logger.info("All the elements have at least one no NA value. Kept all.")
 
     return data
 
 def clean_reps(data: pd.DataFrame) -> pd.DataFrame:
     """
     """
-    print("QC: identical values")
+    logger.info("QC: identical values")
     elements2remove = data.loc[data.nunique(axis = 1) == 1].index.tolist()
     if elements2remove:
-        print("Identical values across samples for the following elements. Removed from the analysis:")
-        print(elements2remove)
+        logger.info(f"Identical values across samples for the following elements: {elements2remove}")
+        logger.info("Elements removed from the analysis")
         data = data.loc[data.nunique(axis = 1) > 1].index
     else:
-        print("No element has identical values. Kept.")
+        logger.info("No element has identical values across samples. Kept all.")
 
     return data
 
@@ -32,14 +38,14 @@ def handle_nan(data: pd.DataFrame,
             config: dict) -> pd.DataFrame:
     """
     """
-    print("QC: handle remaining missing values")
+    logger.info("QC: handle remaining missing values")
     if config["handle_na"] == "ignore":
-        print("Option: ignore. Keeping NAs")
+        logger.info("Option: ignore. Keeping NAs")
     elif config["handle_na"] == "mean":
-        print("Option: mean. NAs filled with mean per element")
+        logger.info("Option: mean. NAs filled with mean per element")
         data = data.apply(lambda row: row.fillna(row.mean()), axis = 1)
     elif config["handle_na"] == "cohort":
-        print("Option: all_samples. NAs filled with the all_samples value per elements")
+        logger.info("Option: all_samples. NAs filled with the all_samples value per elements")
         data = data.apply(lambda col: col.fillna(data["all_samples"]))
     
     return data
