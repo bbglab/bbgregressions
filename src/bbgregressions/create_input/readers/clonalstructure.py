@@ -1,8 +1,12 @@
 import pandas as pd
+import daiquiri
 
 from bbgregressions.create_input.schemas.clonalstructure import *
 from bbgregressions.create_input.formatter import formatter
 
+from bbgregressions import __logger_name__
+
+logger = daiquiri.getLogger(__logger_name__)
 
 def mutdensity(config: dict,
             output_dir: str) -> pd.DataFrame:
@@ -37,6 +41,10 @@ def mutdensity(config: dict,
             
             data_f = data.loc[(data["REGIONS"] == region) &
                             (data["MUTTYPES"] == muttype)]
+            
+            logger.info("Generating table with these filter combination:")
+            logger.info(f"\tRegion: {region}")
+            logger.info(f"\tMutation type: {muttype}")
 
             formatter(data = data_f,
                     metric = metric,

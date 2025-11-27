@@ -18,7 +18,7 @@ def update_config(metric_config: dict,
     for elem in GENERAL_CONFIG_OPTIONS:
         if elem not in metric_config.keys():
             metric_config[elem] = general_config[elem]
-            logger.info(f"[updated from general config] {elem}: {metric_config[elem]}")
+            logger.info(f"\t[updated from general config] {elem}: {metric_config[elem]}")
 
     return metric_config
 
@@ -37,12 +37,11 @@ def main(config_file: str) -> None:
     for metric in metrics_config:
 
         metric_config = metrics_config[metric]
-        logger.info(f'Processing {metric.upper()}: {metric_config["metric_name"]}')
-        logger.info("###############################################")
+        logger.info(f'### Processing {metric.upper()}: {metric_config["metric_name"]} ###')
         logger.info("Received configuration:")
         for elem in metric_config:
             if elem != "metric_name":
-                logger.info(f"{elem}: {metric_config[elem]}")
+                logger.info(f"\t{elem}: {metric_config[elem]}")
         
         metric_config = update_config(metric_config, general_config)
         reader = METRIC2READER[metric_config["metric_name"]]
