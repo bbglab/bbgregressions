@@ -27,7 +27,7 @@ def main(metrics: list) -> None:
         else:
             logger.warning(f"Template not available for {metric}. Skipping.")
 
-    with open("config.yaml", "w") as file:
+    with open("config.yml", "w") as file:
         yaml.dump(config, file, sort_keys = False,
                 default_flow_style = False)
     
