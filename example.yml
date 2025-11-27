@@ -10,7 +10,7 @@ metrics:
     adjust: "no"
     elements:
     samples:
-    elements_total_by: "included"
+    elements_total_by: "mean"
     samples_total_by: "included"
 
   # metric_2:

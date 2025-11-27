@@ -20,9 +20,9 @@ def add_totals(data: pd.DataFrame,
         opposite_ttype = "element"
 
     if method == "included":
-        logger.info("Method: included. The totals for each {ttype} are already in the data")
+        logger.info(f"Method: included. The totals for each {ttype} are already in the data")
     elif method == "none":
-        logger.info("Method: none. The totals for each {ttype} won't be included")
+        logger.info(f"Method: none. The totals for each {ttype} won't be included")
     else:
         if method == "sum":
             total = data.sum(axis = axis, skipna = True).to_frame(f"total_{opposite_ttype}")
@@ -37,6 +37,7 @@ def add_totals(data: pd.DataFrame,
             data = pd.concat([data, total], ignore_index = True)
 
         logger.info(f"Method: {method}. The totals for each {ttype} are calculated as the {method} of all {opposite_ttype}s")
+        logger.warning("Double check the totals were not already in the table")
     
     return data
 
