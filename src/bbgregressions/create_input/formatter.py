@@ -11,6 +11,7 @@ logger = daiquiri.getLogger(__logger_name__)
 
 def formatter(data: pd.DataFrame,
             metric: str,
+            filters: str,
             config: dict,
             elements: list,
             samples: list,
@@ -37,7 +38,7 @@ def formatter(data: pd.DataFrame,
     data_ok = handle_nan(data_ts, config)
 
     # save 
-    file = os.path.join(output_dir, f"{metric.lower()}.tsv")
+    file = os.path.join(output_dir, f"{metric.lower()}.{filters}.tsv")
     logger.info(f"Input generated for {metric}")
     data_ok.to_csv(file, sep = "\t")
     logger.info(f"Saved as {file}")

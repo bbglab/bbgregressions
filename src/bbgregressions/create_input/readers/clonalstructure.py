@@ -44,10 +44,11 @@ def mutdensity(config: dict,
             
             logger.info("Generating table with these filter combination:")
             logger.info(f"\tRegion: {region}")
-            logger.info(f"\tMutation type: {muttype}")
-
+            logger.info(f"\tMutation type: {muttype.lower()}")
+            filters = f"{region}.{muttype.lower()}"
             formatter(data = data_f,
                     metric = metric,
+                    filters = filters,
                     config = config,
                     elements = elements,
                     samples = samples,
