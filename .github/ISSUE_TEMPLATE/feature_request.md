@@ -1,41 +1,58 @@
 ---
-name: ✨ Feature Request / Enhancement
-about: Suggest an idea for this project.
-title: "[FEAT] Concise description of the desired feature"
-labels: 'enhancement, feature-request'
+name: 🐛 Bug Report
+about: Report a specific issue, unexpected behavior, or crash.
+title: "[BUG] Concise description of the problem"
+labels: 'bug, needs-triage'
 assignees: ''
 ---
 
-## 🚀 The Goal
+## 📝 Description of the Bug
 
-Describe the feature or enhancement you would like to see implemented. What exactly would it do?
-
----
-
-## 💡 Motivation
-
-Why is this feature important? What problem does it solve, or what value does it add to the project/user?
-
-> Example: "As a [type of user], I want to [action] so that [benefit]."
-
-## 🎯 Proposed Solution
-
-Describe how you think this feature could be implemented. Include any technical ideas or suggested UI/UX, if applicable.
-
-### Acceptance Criteria
-
-What specific conditions must be met for this feature to be considered complete?
-
-* [ ] The feature must work on all supported browsers.
-* [ ] It must be accessible via the main navigation menu.
-* [ ] Performance must be fast, loading in under X seconds.
+A clear and concise explanation of what the bug is.
 
 ---
 
-## ➕ Alternatives Considered (Optional)
+## 🛠️ Steps to Reproduce
 
-Have you considered any alternative solutions or workarounds? If so, please describe them and why you believe this proposed solution is better.
+Steps to reproduce the behavior:
 
-## 🔗 Related Issues (Optional)
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error/unexpected output
 
-Are there any other related issues or discussions? Link them here.
+## ✔️ Expected Behavior
+
+A clear and concise description of what you expected to happen.
+
+## ❌ Actual Behavior
+
+A clear and concise description of what actually happens (including error messages, incorrect data, etc.).
+
+---
+
+## 💡 Potential Solution (Optional)
+
+If you have an idea for a fix or where the problem might lie, please describe it here.
+
+> Example: "I suspect this is due to an off-by-one error in the pagination component on line 45 of `list-view.js`."
+> Example: "A simple null check should prevent the crash."
+
+---
+
+## 🖥️ Environment
+
+Please complete the following information:
+
+* **OS:** [e.g., Windows 10, macOS Monterey, Ubuntu 22.04]
+* **Browser:** [e.g., Chrome, Firefox, Safari]
+* **Version:** [e.g., 101.0.4951.64]
+* **App/Package Version:** [e.g., v1.5.0]
+
+## 👀 Screenshots or Logs (Optional)
+
+If applicable, add screenshots, error console output, or log snippets to help explain your problem.
+
+## ➕ Additional Context
+
+Add any other context about the problem here (e.g., previous actions, specific user type, etc.).
