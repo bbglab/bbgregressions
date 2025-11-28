@@ -1,6 +1,6 @@
 ---
 name: 🐛 Bug Report
-about: Report a specific issue, unexpected behavior, or crash.
+about: Report a specific issue, unexpected behavior, or crash [not mandatory to fill in all the fields]
 title: "[BUG] Concise description of the problem"
 labels: 'bug, needs-triage'
 assignees: ''

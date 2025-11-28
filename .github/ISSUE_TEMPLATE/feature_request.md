@@ -1,6 +1,6 @@
 ---
 name: ✨ Feature Request / Enhancement
-about: Suggest an idea for this project.
+about: Suggest an idea for this project [not mandatory to fill in all the fields]
 title: "[FEAT] Concise description of the desired feature"
 labels: 'enhancement, feature-request'
 assignees: ''
