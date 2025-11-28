@@ -28,7 +28,7 @@ def clean_reps(data: pd.DataFrame) -> pd.DataFrame:
     if elements2remove:
         logger.info(f"Identical values across samples for the following elements: {elements2remove}")
         logger.info("Elements removed from the analysis")
-        data = data.loc[data.nunique(axis = 1) > 1].index
+        data = data.loc[data.nunique(axis = 1) > 1]
     else:
         logger.info("No element has identical values across samples. Kept all.")
 

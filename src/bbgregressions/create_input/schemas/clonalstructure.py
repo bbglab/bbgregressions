@@ -28,14 +28,15 @@ CONFIG_TEMPLATE_MUTDENSITY = CONFIG_TEMPLATE_MUTREADSDENSITY = {
 CONFIG_TEMPLATE_MUTREADSDENSITY["metric_name"] = "mutreadsdensity"
 
 # omega
-OMEGA_IMPACTS = ["essential_splice",
-"essential_splice_plus",
+OMEGA_IMPACTS = [
+"essential_splice",
+# "essential_splice_plus",
 "missense",
 "nonsense",
 "nonsynonymous_splice",
 "splice_region_variant",
 "truncating",
-"truncating_plus"
+# "truncating_plus"
 ]
 
 OMEGA_GLOBALLOC = OMEGA_MULTI = ["yes", "no"]

@@ -152,7 +152,7 @@ def process_oncodrivefml(oncodrivefml_dir, total_cols_by,
     return None
 
 def omega(config: dict,
-            output_dir: str) -> pd.DataFrame:
+        output_dir: str) -> pd.DataFrame:
     """
     Reads and filters omega data from deepCSA.
     Calls formatter to produce a regressions input
@@ -167,74 +167,36 @@ def omega(config: dict,
 
     # load data
     data = pd.read_csv(config["file"], sep = "\t")
-    data = data.rename({"gene": "element", "sample": "sample"}, axis = 1)
+    data = data.rename({"gene": "element", "sample": "sample", "dnds": "omega"},
+                    axis = 1)
 
-    # create tables
-    metric_var = "dnds"
-    impacts4muts = omega_df["impact"].unique() # mutation impact filter used to compute the omega values
-    print(impacts4muts)
-    # muts4profile = ["NoValue", "non_prot_aff"] # muts used to create the bg profile
-    muts4profile = ["NoValue"] # muts used to create the bg profile # Ferriol deactivated nonprotaff profile in the latest run
-    # uniqueormulti_muts = ["NoValue", "multi"] # whether each mutation is considered once or as many ALT reads is has
-    uniqueormulti_muts = ["NoValue"]
+    # read filters
+    impacts = OMEGA_IMPACTS if not config["impact"] else config["impact"]
+    elements = data["element"].unique() if not config["elements"] else config["elements"]
+    elements = [f"{elem}_{impact}" for impact in impacts for elem in elements]
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
+    sign_thres = 1.01 if config["significance_threshold"] == 1 else config["significance_threshold"]
 
-    ## equivalence for file names needed for the regression module
-    names4files_profile = {
-        "NoValue": "allprof",
-        "non_prot_aff": "nonprotaffprof"
-    }
-    names4files_uniqmultimuts = {
-        "NoValue": "uniquemuts",
-        "multi": "multimuts"
-    }
+    # filter data and prepare for formatter
+    data_f = data.loc[data["impact"].isin(impacts)]
+    data_f = data_f.loc[data_f["pvalue"] < sign_thres] 
+    ## element: element + impact to avoid repetition
+    data_f["element"] = data_f.apply(lambda row: f"{row['element']}_{row['impact']}", axis = 1)
+    logger.info("Generating table with these filter combination:")
+    logger.info(f"\tImpacts: {impacts}")
+    logger.info(f"\tGlobal loc mode: {config["global_loc"]}")
+    logger.info(f"\tMulti mode: {config["multi"]}")
 
-    samples = list(set([".".join(file.split(".")[:2]) for file in omega_df["sample"]]))
-    # print(samples)
-    for profile in muts4profile:
-        for uniqormulti in uniqueormulti_muts:
-            # analysis_info = [f'{sampl}.{profile}.{uniqormulti}.tsv'.replace('.NoValue', '') for sampl in samples] # this way we do the subset properly (checked)
-            analysis_info = [f'{sampl}.{profile}.{uniqormulti}.global_loc.tsv'.replace('.NoValue', '') for sampl in samples] # this way we do the subset properly (checked)
-            # print(analysis_info)
-            for impact in impacts4muts:
-                # print(impact)
-                print(impact, profile, uniqormulti)
-                if impact in ['essential_splice_plus', 'truncating_plus']:
-                    continue
-                omega_df_f = omega_df.loc[(omega_df["sample"].isin(analysis_info)) &
-                                            (omega_df["impact"] == impact)]
-                # display(omega_df_f)
-                omega_df_f["sample"] = omega_df_f.apply(lambda row: row["sample"].split(".")[1], axis = 1)   # after use, remove analysis info to every sample id
-                omega_df_f = omega_df_f.rename({"GENE_ID": "gene"}, axis = 1)
-
-                ## all omega values, regardless of significance
+    globalloc_label = "globalloc" if config["global_loc"] == "yes" else "no-globalloc"
+    multi_label = "multi" if config["multi"] == "yes" else "no-multi"
+    sign_thres_label = "no-significance-thres" if config["significance_threshold"] == 1 else f"significance-thres-{sign_thres}"
+    filters = f"{globalloc_label}.{multi_label}.{sign_thres_label}"
+    formatter(data = data_f,
+            metric = config["metric_name"],
+            filters = filters,
+            config = config,
+            elements = elements,
+            samples = samples,
+            output_dir = output_dir)
                 
-                metric_var4file = f"omega.{metric_var}_{omega_modality}_{impact.replace('_', '')}_{names4files_profile[profile]}_{names4files_uniqmultimuts[uniqormulti]}_nosignificant"
-                create_metric_table(metric_df = omega_df_f,
-                                    metric_var = metric_var,
-                                    rows_var = "gene", cols_var = "sample",
-                                    rows_names = rows_names, cols_names = cols_names, 
-                                    total_cols_by = total_cols_by,
-                                    total_rows_by = "all_samples",
-                                    metric_var4file = metric_var4file, 
-                                    save_files_dir = save_files_dir, 
-                                    keep_rows_ordered = True, keep_cols_ordered = True)
-                
-                ## only significant omega values
-                print(impact, profile, uniqormulti, "significant")
-                metric_var4file = f"omega.{metric_var}_{omega_modality}_{impact.replace('_', '')}_{names4files_profile[profile]}_{names4files_uniqmultimuts[uniqormulti]}_significant"
-                ### aproach 1: filter out non-significant values, generates NA
-                omega_df_f = omega_df_f.loc[(omega_df_f["pvalue"] < 0.05)]
-                ### aproach 2: fill non-significant values with zero (for regressions)
-                # omega_df_f.loc[(omega_df_f["pvalue"] > 0.05), metric_var] = 0
-                create_metric_table(metric_df = omega_df_f,
-                                    metric_var = metric_var,
-                                    rows_var = "gene", cols_var = "sample",
-                                    rows_names = rows_names, cols_names = cols_names, 
-                                    total_cols_by = total_cols_by,
-                                    total_rows_by = "all_samples",
-                                    metric_var4file = metric_var4file, 
-                                    save_files_dir = save_files_dir, 
-                                    keep_rows_ordered = True, keep_cols_ordered = True)
-                
-
     return None
