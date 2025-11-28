@@ -12,15 +12,16 @@ metrics:
     elements_total_by: select between none, included, sum, mean, median
     samples_total_by: select between none, included, sum, mean, median
   metric_2:
-    metric_name: mutreadsdensity
-    file: /path/to/all_mutdensities.tsv
-    region:
-    - select between all, protein_affecting, non_protein_affecting, synonymous
+    metric_name: omega
+    file: /path/to/file
+    global_loc: select between yes, no
+    multi: select between yes, no
+    impact:
+    - select between essential_splice, essential_splice_plus, missense, nonsense,
+      nonsynonymous_splice, splice_region_variant, truncating, truncating_plus
     - ''
-    muttype:
-    - select between all, snv, indel, snv_indel
-    - ''
-    adjust: select between yes, no
+    significance_threshold: recommended 0.05 (if no filtering by significance, choose
+      1)
     elements_total_by: select between none, included, sum, mean, median
     samples_total_by: select between none, included, sum, mean, median
 general:

@@ -24,11 +24,12 @@ def bbgregressions():
 
 @bbgregressions.command(name='config_template',
                         context_settings=dict(help_option_names=['-h', '--help']),
-                        help="Creates a template for your configuration based on the metrics you \
-                            want to analyze")
+                        help="Build configuration template")
 @click.option('--metrics', type=click.STRING,
             callback=lambda ctx, param, value: [x.strip() for x in value.split(",")],
-            help='Metrics you want to analyze')
+            help="""Metrics you want to analyze (format: comma-separated without spaces).
+            Note: if you want to create the template for the same metric to be filled with
+            different values, input it as many times as needed""")
 @setup_logging_decorator
 def create_config_template(metrics):
     """Config template to run regressions"""
