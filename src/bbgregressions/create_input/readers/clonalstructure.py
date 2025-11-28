@@ -172,7 +172,10 @@ def omega(config: dict,
 
     # read filters
     impacts = OMEGA_IMPACTS if not config["impact"] else config["impact"]
-    elements = data["element"].unique() if not config["elements"] else config["elements"]
+    if not config["elements"]:
+        elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
+    else:
+        elements = config["elements"]
     elements = [f"{elem}_{impact}" for impact in impacts for elem in elements]
     samples = data["sample"].unique() if not config["samples"] else config["samples"]
     sign_thres = 1.01 if config["significance_threshold"] == 1 else config["significance_threshold"]
