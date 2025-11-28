@@ -56,101 +56,6 @@ def mutdensity(config: dict,
 
     return None
 
-def process_oncodrivefml(oncodrivefml_dir, total_cols_by,
-                         rows_names, cols_names, 
-                         save_files_dir):
-    """
-    Generates and saves pivoted dataframes of OncodriveFML metrics
-    (z-score and difference between observed and expected mean 
-    deleteriousness scores), with columns as samples and rows as genes.
-    Does the same with a two column table for the total of
-    the genes and the total of the samples.
-    Creates as many versions as those specified in 
-    metrics and muts4profile, and for each type created a version with all
-    values and another with significant values only
-    
-    Parameters
-    ----------
-    oncodrivefml_dir: str
-        Path to the directory where the output files of OncodriveFML
-        are stored
-    total_cols_by: str
-        How to calculate the total for the columns of the dataframe.
-        Can be "sum", "mean" or "median"
-    rows_names: list
-        List of values to be used as the row names of the 
-        pivoted dataframe. Used both to subset the df if needed
-        and to add rows with NA we want to keep for downstream 
-        analysis
-    cols_names: list
-        List of values to be used as the column names of the 
-        pivoted dataframe. Used both to subset the df if needed
-        and to add columns with NA we want to keep for downstream 
-        analysis
-    save_files_dir: str
-        Path where to store the generated files
-
-    Returns
-    -------
-    None
-    """
-
-    # load OncodriveFML results in a df
-    oncodrivefml_df = pd.DataFrame()
-    for file in os.listdir(oncodrivefml_dir):
-        sample_df = pd.read_csv(f"{oncodrivefml_dir}/{file}/{file.split('.')[0]}-oncodrivefml.tsv.gz", 
-                                sep = "\t", header = 0)
-        sample_df["sample"] = file
-        oncodrivefml_df = pd.concat((oncodrivefml_df, sample_df)).reset_index(drop = True)
-
-    # compute new metric: difference between expected and observed mean deleteriousness scores
-    oncodrivefml_df["DIFF-OBSvsEXP"] = oncodrivefml_df["AVG_SCORE_OBS"] - oncodrivefml_df["POPULATION_MEAN"]
-
-    # create tables
-    metrics = ["Z-SCORE", "DIFF-OBSvsEXP"]
-    # muts4profile = [".all", ".non_prot_aff"] # muts used to create the bg profile
-    muts4profile = [".all"] # muts used to create the bg profile # Ferriol deactivated nonprotaff profile in the latest run
-
-    for metric_var in metrics:
-        for profile in muts4profile:
-            
-            oncodrivefml_df_f = oncodrivefml_df.loc[oncodrivefml_df["sample"].str.contains(profile)]
-            oncodrivefml_df_f["sample"] = oncodrivefml_df_f.apply(
-                lambda row: row["sample"].split(".")[0], axis = 1)    # after use, remove profile info to every sample id
-            oncodrivefml_df_f = oncodrivefml_df_f.rename({"GENE_ID": "gene"}, axis = 1)
-
-            ## all oncodrivefml values, regardless of significance
-            print(metric_var, profile)
-            create_metric_table(metric_df = oncodrivefml_df_f,
-                            metric_var = metric_var,
-                            rows_var = "gene", cols_var = "sample",
-                            rows_names = rows_names, cols_names = cols_names, 
-                            total_cols_by = total_cols_by,
-                            total_rows_by = "all_samples",
-                            metric_var4file = f'oncodrivefml.{"".join(metric_var.split("-"))}_{"".join(profile[1:].split("_"))}prof_nosignificant', 
-                            save_files_dir = save_files_dir, 
-                            keep_rows_ordered = True, keep_cols_ordered = True)
-
-            ## only significant oncodrivefml values (qvalue is not calculated for one sample only)
-            ### aproach 1: filter out non-significant values, generates NA
-            # oncodrivefml_df_f = oncodrivefml_df_f.loc[(oncodrivefml_df_f["Q_VALUE"] < 0.05)  
-            #                                           | ((oncodrivefml_df_f["Q_VALUE"].isna()) & (oncodrivefml_df_f["P_VALUE"] < 0.05))]
-            ### aproach 2: fill non-significant values with zero (for regressions)
-            oncodrivefml_df_f.loc[(oncodrivefml_df_f["Q_VALUE"] > 0.05)  
-                                | ((oncodrivefml_df_f["Q_VALUE"].isna()) & (oncodrivefml_df_f["P_VALUE"] > 0.05)), metric_var] = 0
-            print(metric_var, profile, "significant")
-            create_metric_table(metric_df = oncodrivefml_df_f,
-                            metric_var = metric_var,
-                            rows_var = "gene", cols_var = "sample",
-                            rows_names = rows_names, cols_names = cols_names, 
-                            total_cols_by = total_cols_by,
-                            total_rows_by = "all_samples",
-                            metric_var4file = f'oncodrivefml.{"".join(metric_var.split("-"))}_{"".join(profile[1:].split("_"))}prof_significant', 
-                            save_files_dir = save_files_dir, 
-                            keep_rows_ordered = True, keep_cols_ordered = True)
-            
-    return None
-
 def omega(config: dict,
         output_dir: str) -> pd.DataFrame:
     """
@@ -183,7 +88,6 @@ def omega(config: dict,
     # filter data and prepare for formatter
     data_f = data.loc[data["impact"].isin(impacts)]
     data_f = data_f.loc[data_f["pvalue"] < sign_thres] 
-    ## element: element + impact to avoid repetition
     data_f["element"] = data_f.apply(lambda row: f"{row['element']}_{row['impact']}", axis = 1)
     logger.info("Generating table with these filter combination:")
     logger.info(f"\tImpacts: {impacts}")
