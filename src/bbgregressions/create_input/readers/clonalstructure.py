@@ -151,55 +151,23 @@ def process_oncodrivefml(oncodrivefml_dir, total_cols_by,
             
     return None
 
-def process_omega_mle(omega_dir,
-                      total_cols_by,
-                      rows_names, cols_names, 
-                      save_files_dir,
-                      omega_modality = "mle"):
+def omega(config: dict,
+            output_dir: str) -> pd.DataFrame:
     """
-    Generates and saves pivoted dataframes of omega (MLE or bayes),
-    with columns as samples and rows as genes.
-    Does the same with a two column table for the total of
-    the genes and the total of the samples.
-    Creates as many versions as those specified in 
-    metrics and muts4profile, and for each type created a version with all
-    values and another with significant values only
-
+    Reads and filters omega data from deepCSA.
+    Calls formatter to produce a regressions input
+    table for each filtering combination
+    
     Parameters
     ----------
-    omega_dir: str
-        Path to the directory where the output files of omega
-        are stored
-    total_cols_by: str
-        How to calculate the total for the columns of the dataframe.
-        Can be "sum", "mean" or "median"
-    rows_names: list
-        List of values to be used as the row names of the 
-        pivoted dataframe. Used both to subset the df if needed
-        and to add rows with NA we want to keep for downstream 
-        analysis
-    cols_names: list
-        List of values to be used as the column names of the 
-        pivoted dataframe. Used both to subset the df if needed
-        and to add columns with NA we want to keep for downstream 
-        analysis
-    save_files_dir: str
-        Path where to store the generated files
-    omega_modality: str (default: "mle")
-        Omega modality used to compute omegas. Can be "mle" or "bayes".
+    config: dict
+        filtering info and file name
 
-    Returns
-    -------
-    None
     """
 
-    # load omega results in a df
-    omega_df = pd.DataFrame()
-    files = [file for file in os.listdir(omega_dir) if omega_modality in file]  
-    for file in files:
-        sample_df = pd.read_csv(f"{omega_dir}/{file}", sep = "\t", header = 0)
-        sample_df["sample"] = file
-        omega_df = pd.concat((omega_df, sample_df)).reset_index(drop = True)
+    # load data
+    data = pd.read_csv(config["file"], sep = "\t")
+    data = data.rename({"gene": "element", "sample": "sample"}, axis = 1)
 
     # create tables
     metric_var = "dnds"
