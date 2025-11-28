@@ -1,7 +1,7 @@
 metrics:
   metric_1:
     metric_name: "mutdensity"
-    file: "/data/bbg/nobackup/bladder_ts/results/2025-11-16_deepCSA_updated_run/mutdensity/all_mutdensities.tsv"
+    file: "data/bladder/all_mutdensities.tsv"
     region: 
       - "protein_affecting"
       - "non_protein_affecting"
