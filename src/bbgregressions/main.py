@@ -5,12 +5,13 @@ import daiquiri
 
 from bbgregressions import __logger_name__, __version__
 
-from bbgregressions.config_template.main import main as create_config_main
-from bbgregressions.create_input.main    import main as create_input_main
+from bbgregressions.config_template.main            import main as create_config_main
+from bbgregressions.create_input.main               import main as create_input_main
+from bbgregressions.create_input.schemas.globals    import METRIC2READER as VALID_METRICS
 # from bbgregressions.regressions.main    import main as regressions_main
 # from bbgregressions.plot.main           import main as plot_main
 
-from bbgregressions.globals              import setup_logging_decorator, startup_message
+from bbgregressions.globals                         import setup_logging_decorator, startup_message
 
 logger = daiquiri.getLogger(__logger_name__)
 
@@ -32,7 +33,12 @@ def bbgregressions():
 def create_config_template(metrics):
     """Config template to run regressions"""
     startup_message(__version__, "Pre-analysis: create template for config\n")
-    
+    for metric in metrics:
+        if metric not in VALID_METRICS.keys():
+            logger.critical(f"No reader exist for this metric. Valid metrics: {VALID_METRICS.keys()}")
+            logger.info("Aborting run")
+            raise IOError("No reader exist for this metric")
+
     create_config_main(metrics)
 
 
