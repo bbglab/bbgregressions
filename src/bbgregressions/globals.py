@@ -71,6 +71,8 @@ GENERAL_CONFIG_OPTIONS = {
     "handle_na" : ["ignore", "mean", "all_samples"],
     "elements_total_by" : ["none", "included", "sum", "mean", "median"],
     "samples_total_by" : ["none", "included", "sum", "mean", "median"],
+    "elements": "",
+    "samples": "",
 }
 
 CONFIG_TEMPLATE_GENERAL = {

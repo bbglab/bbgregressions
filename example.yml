@@ -36,11 +36,11 @@ metrics:
     - nonsense
     - nonsynonymous_splice
     - truncating
-    elements:
-    samples:
     significance_threshold: 1
     elements_total_by: included
     samples_total_by: included
 general:
   output_dir: "./test/"
   handle_na: "mean"
+  elements:
+  samples:

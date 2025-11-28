@@ -17,8 +17,8 @@ metrics:
     global_loc: select between yes, no
     multi: select between yes, no
     impact:
-    - select between essential_splice, essential_splice_plus, missense, nonsense,
-      nonsynonymous_splice, splice_region_variant, truncating, truncating_plus
+    - select between essential_splice, missense, nonsense, nonsynonymous_splice, splice_region_variant,
+      truncating
     - ''
     significance_threshold: recommended 0.05 (if no filtering by significance, choose
       1)
@@ -27,3 +27,7 @@ metrics:
 general:
   output_dir: /path/to/dir
   handle_na: select between ignore, mean, all_samples
+  elements: move this field to the specific metric section if the subset by elements
+    is not general
+  samples: move this field to the specific metric section if the subset by samples
+    is not general
