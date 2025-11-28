@@ -31,6 +31,15 @@ A clear and concise description of what actually happens (including error messag
 
 ---
 
+## 💡 Potential Solution (Optional)
+
+If you have an idea for a fix or where the problem might lie, please describe it here.
+
+> Example: "I suspect this is due to an off-by-one error in the pagination component on line 45 of `list-view.js`."
+> Example: "A simple null check should prevent the crash."
+
+---
+
 ## 🖥️ Environment
 
 Please complete the following information:
