@@ -31,3 +31,4 @@ general:
     is not general
   samples: move this field to the specific metric section if the subset by samples
     is not general
+  predictors_file: path/to/file
