@@ -8,7 +8,7 @@ from bbgregressions import __logger_name__, __version__
 from bbgregressions.config_template.main            import main as create_config_main
 from bbgregressions.create_input.main               import main as create_input_main
 from bbgregressions.create_input.schemas.globals    import METRIC2READER as VALID_METRICS
-# from bbgregressions.regressions.main    import main as regressions_main
+from bbgregressions.regressions.main                import main as regressions_main
 # from bbgregressions.plot.main           import main as plot_main
 
 from bbgregressions.globals                         import setup_logging_decorator, startup_message
@@ -57,19 +57,17 @@ def create_input(config_file):
     create_input_main(config_file)
 
 
-# @bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
-#                         help="Run regressions")
-# @click.option('--option1-example', type=click.Choice(['', '', '']), default = 'hg38', help='')
-# @click.option('--option2-example', type=click.Path(exists=True), help='')
-# @click.option('--option2-example', type=click.STRING, default = None, help='')
-# @setup_logging_decorator
-# def regressions(args):
-#     """message"""
-#     startup_message(__version__, "Running regressions...")
+@bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),
+                        help="Run regression models")
+@click.option('-config', '--config_file', type=click.Path(exists=True),
+            help='YAML file with config settings')
+@setup_logging_decorator
+def regressions(config_file):
+    """message"""
+    startup_message(__version__, "Module 2: run regression models\n")
 
-#     logger.info("example message")
-#     logger.info(f"example message: {laa}")
-#     regressions_main(args)
+    logger.info(f"Reading user defined settings from {config_file}")
+    regressions_main(config_file)
 
 
 # @bbgregressions.command(context_settings=dict(help_option_names=['-h', '--help']),

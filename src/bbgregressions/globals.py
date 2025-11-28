@@ -80,5 +80,7 @@ CONFIG_TEMPLATE_GENERAL = {
     "handle_na": f"select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])}",
     "elements": "move this field to the specific metric section if the subset by elements is not general",
     "samples": "move this field to the specific metric section if the subset by samples is not general",
-    "predictors_file": "path/to/file"
+    "predictors_file": "path/to/file",
+    "model": """choose between linear-univariate, linear-multivariate,
+            linear-mixed-effects-univariate, linear-mixed-effects-multivariate"""
 }
