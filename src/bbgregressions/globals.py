@@ -77,7 +77,8 @@ GENERAL_CONFIG_OPTIONS = {
 
 CONFIG_TEMPLATE_GENERAL = {
     "output_dir": "/path/to/dir",
-    "handle_na": f"select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])}",
+    "handle_na": f"""select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])} 
+    (move this field to the specific metric section if you want a metric-specific NA handling)""",
     "elements": "move this field to the specific metric section if the subset by elements is not general",
     "samples": "move this field to the specific metric section if the subset by samples is not general",
     "predictors_file": "path/to/file",

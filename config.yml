@@ -26,9 +26,12 @@ metrics:
     samples_total_by: select between none, included, sum, mean, median
 general:
   output_dir: /path/to/dir
-  handle_na: select between ignore, mean, all_samples
+  handle_na: "select between ignore, mean, all_samples \n    (move this field to the\
+    \ specific metric section if you want a metric-specific NA handling)"
   elements: move this field to the specific metric section if the subset by elements
     is not general
   samples: move this field to the specific metric section if the subset by samples
     is not general
   predictors_file: path/to/file
+  model: "choose between linear-univariate, linear-multivariate,\n            linear-mixed-effects-univariate,\
+    \ linear-mixed-effects-multivariate"
