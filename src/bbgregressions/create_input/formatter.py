@@ -37,6 +37,9 @@ def formatter(data: pd.DataFrame,
     # handle NA
     data_ok = handle_nan(data_ts, config)
 
+    # transpose df: samples rows, elements columns
+    data_ok = data_ok.T
+
     # save 
     file = os.path.join(output_dir, f"{metric.lower()}.{filters}.tsv")
     logger.info(f"Input generated for {metric}")
