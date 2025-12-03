@@ -7,6 +7,7 @@ from datetime import datetime
 from functools import wraps
 
 from bbgregressions import __logger_name__
+from bbgregressions.regressions.schema import *
 
 logger = daiquiri.getLogger(__logger_name__)
 
@@ -31,7 +32,7 @@ def setup_logging_decorator(func):
 
         os.makedirs(log_dir, exist_ok=True)
         
-        level = logging.DEBUG # if click.get_current_context().params['verbose'] else logging.INFO
+        level = logging.DEBUG if click.get_current_context().params['verbose'] else logging.INFO
 
         formatter = daiquiri.formatter.ColorFormatter(fmt=FORMAT)
         
@@ -81,7 +82,16 @@ CONFIG_TEMPLATE_GENERAL = {
     (move this field to the specific metric section if you want a metric-specific NA handling)""",
     "elements": "move this field to the specific metric section if the subset by elements is not general",
     "samples": "move this field to the specific metric section if the subset by samples is not general",
+
+    "model": f"select between {", ".join(MODELS)}",
+    "multi": f"select between {", ".join(MULTI_OPTIONS)}",
+
     "predictors_file": "path/to/file",
-    "model": """choose between linear-univariate, linear-multivariate,
-            linear-mixed-effects-univariate, linear-mixed-effects-multivariate"""
+    "predictors": "column names in predictors file (if empty, all colnames in predictor file will be used)",
+    "predictors_intercept_0": "leave empty if NA",
+    "predictor_random_effect": "leave empty if NA",
+    "predictors_multi_force": "leave empty if NA",
+    
+    "correct_pvals": "select between yes or no",
+    "significance_threshold": "leave empty if no multiple testing correction"
 }

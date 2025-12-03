@@ -32,6 +32,12 @@ general:
     is not general
   samples: move this field to the specific metric section if the subset by samples
     is not general
+  model: select between linear, linear-mixed-effects
+  multi: select between yes, no
   predictors_file: path/to/file
-  model: "choose between linear-univariate, linear-multivariate,\n            linear-mixed-effects-univariate,\
-    \ linear-mixed-effects-multivariate"
+  predictors: column names in predictors file (if empty, all colnames in predictor
+    file will be used)
+  predictors_intercept_0: leave empty if NA
+  predictor_random_effect: leave empty if NA
+  predictors_multi_force: leave empty if NA
+  qval_threshold: leave empty if no multiple testing correction

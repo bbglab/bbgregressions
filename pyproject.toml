@@ -10,6 +10,7 @@ dependencies = [
     "pandas>=2.3.3",
     "pyyaml>=6.0.3",
     "seaborn>=0.13.2",
+    "statsmodels>=0.14.5",
 ]
 
 # --- ADD THESE SECTIONS MANUALLY ---

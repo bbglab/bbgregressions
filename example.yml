@@ -44,3 +44,18 @@ general:
   handle_na: "mean"
   elements:
   samples:
+  model: linear
+  multi: no
+  predictors_file: /data/bbg/projects/bladder_ts/data/complete_cohort/samples_metadata/20250430_metadata_bladder.tsv
+  predictors: 
+  - is_male
+  - history_smoking
+  - had_prior_chemotherapy
+  - history_drinking
+  - age_decades
+  - bmi_scaled
+  predictors_intercept_0: age_decades
+  predictor_random_effect: 
+  predictors_multi_force: 
+  - is_male, history_smoking
+  qval_threshold: 0.2
