@@ -4,7 +4,6 @@ import pandas as pd
 import statsmodels.formula.api as smf
 
 from bbgregressions.regressions.utils import add_intercept, fill_storage, correct_pvals
-from bbgregressions.regressions.schema import MODELS
 
 from bbgregressions import __logger_name__
 
@@ -32,7 +31,8 @@ def linear_me(data: pd.DataFrame,
 
     return res
 
-
+MODELS = {"linear": linear,
+        "linear-mixed-effects": linear_me}
 
 def main(data: pd.DataFrame, results: dict, elements: list,
         predictors: list, config: dict,
