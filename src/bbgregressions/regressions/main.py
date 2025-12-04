@@ -5,7 +5,7 @@ import pandas as pd
 from bbgregressions import __logger_name__
 
 from bbgregressions.utils.io import read_yaml
-from bbgregressions.regressions.utils import init_storage, multi_rules
+from bbgregressions.regressions.utils import init_storage, multi_rules, clean_multi
 from bbgregressions.regressions.models import main as run_model
 
 logger = daiquiri.getLogger(__logger_name__)
@@ -68,9 +68,11 @@ def main(config_file: str) -> None:
             output_dir_multi = os.path.join(output_dir, metric, "multivariate")
             os.makedirs(output_dir_multi, exist_ok = True) 
 
-            elements, predictors = multi_rules(output_dir_uni, config)
+            elements, predictors, forced_predictors = multi_rules(output_dir_uni,
+                                                                config)
             results = run_model(data, results, elements, predictors, config,
                                 mode = "multi")
+            results = clean_multi(results, forced_predictors)
             for res_elem in results:
                 file = os.path.join(output_dir_multi, f"{res_elem}.tsv")
                 results[res_elem].to_csv(file, sep = "\t")
