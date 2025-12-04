@@ -55,8 +55,10 @@ general:
   - history_drinking
   - age_decades
   - bmi_scaled
-  predictors_intercept_0: age_decades
+  predictors_intercept_0: 
+  - age_decades
   predictor_random_effect: 
   predictors_multi_force: 
   - is_male, history_smoking
+  correct_pvals: yes
   qval_threshold: 0.2
