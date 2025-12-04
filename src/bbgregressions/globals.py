@@ -8,6 +8,7 @@ from functools import wraps
 
 from bbgregressions import __logger_name__
 from bbgregressions.regressions.schema import *
+from bbgregressions.regressions.models import MODELS
 
 logger = daiquiri.getLogger(__logger_name__)
 
