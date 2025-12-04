@@ -53,14 +53,14 @@ def main(config_file: str) -> None:
         data = pd.read_csv(file, sep = "\t", index_col = 0)
         logger.info(f"Running model for: {metric}")
 
-        # merge with predictors
-        data = data.merge(predictors_data, right_index = True, 
-                        left_index = True, how = "left")
-
         # init storage dataframes
         elements = data.columns
         predictors = config["predictors"]
         results = init_storage(elements, predictors)
+
+        # merge with predictors
+        data = data.merge(predictors_data, right_index = True, 
+                        left_index = True, how = "left")
 
         # run univariate model
         logger.info("Starting with univariate analysis")
