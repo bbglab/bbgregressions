@@ -43,6 +43,7 @@ def main(config_file: str) -> None:
     for file in inputs:
 
         metric = ".".join(file.split(".")[:-1])
+        file = os.path.join(inputs_dir, file)
         data = pd.read_csv(file, sep = "\t")
         logger.info(f"Running model for: {metric}")
 
