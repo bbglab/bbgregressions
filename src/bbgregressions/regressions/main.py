@@ -22,7 +22,7 @@ def main(config_file: str) -> None:
     logger.info(f"Regression results will be stored in {output_dir}")
 
     # use existing inputs (check)
-    inputs_dir = os.path.join(config["output_dir"], "inputs")
+    inputs_dir = os.path.join(config["output_dir"], "input")
     if os.path.isdir(inputs_dir):
         if os.listdir(inputs_dir):
             inputs = os.listdir(inputs_dir)
