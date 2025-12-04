@@ -18,7 +18,9 @@ logger = daiquiri.getLogger(__logger_name__)
 
 @click.group(context_settings={'help_option_names': ['-h', '--help']})
 @click.version_option(__version__)
-def bbgregressions():
+@click.option('-v', '--verbose', is_flag=True, default=False, 
+            help='Enable verbose output (sets logging level to DEBUG).')
+def bbgregressions(verbose):
     """bbgregressions: software for customized regression models"""
     pass
 
