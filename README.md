@@ -5,3 +5,4 @@ Code to run linear models for association analysis.
 
 Notes:
 - Predictor metadata tab-delimited
+- Critical for config: what needs to be specified as list and what not
