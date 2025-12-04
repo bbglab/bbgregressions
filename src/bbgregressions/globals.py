@@ -21,19 +21,17 @@ FORMAT = "%(asctime)s - %(color)s%(levelname)-7s%(color_stop)s | %(name)s - %(co
 
 def setup_logging_decorator(func):
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    @click.pass_context
+    def wrapper(ctx, *args, **kwargs):
         log_dir = os.path.join('.','log')
-        command_name = click.get_current_context().command.name
+        command_name = ctx.command.name
 
-        if command_name == 'run':
-            cohort = click.get_current_context().params["cohort"]
-            fname = f'{cohort if not "None" else command_name}_{DATE}.log'
-        else: 
-            fname = f"{command_name}_{DATE}.log"
+        fname = f"{command_name}_{DATE}.log"
 
         os.makedirs(log_dir, exist_ok=True)
         
-        level = logging.DEBUG if click.get_current_context().params['verbose'] else logging.INFO
+        verbose_flag = ctx.parent.params.get('verbose', False)
+        level = logging.DEBUG if verbose_flag else logging.INFO
 
         formatter = daiquiri.formatter.ColorFormatter(fmt=FORMAT)
         
