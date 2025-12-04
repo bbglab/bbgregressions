@@ -35,6 +35,12 @@ def main(config_file: str) -> None:
         logger.critical("Run/re-run bbgregressions create_input")
         raise IOError("No input directory")
     
+    # load predictors
+    predictors_data = pd.read_csv(config["predictors_file"], sep = "\t",
+                                index_col = config["sample_column"])
+    logger.info(f"Predictors obtained from {config['predictors_file']}")
+    logger.info(f"Predictors: {config['predictors']}")
+
     # calculate regressions per input
     output_dir = os.path.join(config["output_dir"], "regressions")
     os.makedirs(output_dir, exist_ok = True) 
@@ -44,8 +50,12 @@ def main(config_file: str) -> None:
 
         metric = ".".join(file.split(".")[:-1])
         file = os.path.join(inputs_dir, file)
-        data = pd.read_csv(file, sep = "\t")
+        data = pd.read_csv(file, sep = "\t", index_col = 0)
         logger.info(f"Running model for: {metric}")
+
+        # merge with predictors
+        data = data.merge(predictors_data, right_index = True, 
+                        left_index = True, how = "left")
 
         # init storage dataframes
         elements = data.columns

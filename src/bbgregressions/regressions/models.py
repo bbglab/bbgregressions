@@ -46,7 +46,7 @@ def main(data: pd.DataFrame, results: dict, elements: list,
         terms = zip(elements, predictors)
     
     for element, predictors in terms:
-
+        print(element, predictors)
         intercept = add_intercept(predictors, config)
         
         formula = f"{element} ~ {predictors}{intercept}"

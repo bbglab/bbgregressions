@@ -86,7 +86,7 @@ CONFIG_TEMPLATE_GENERAL = {
     "multi": f"select between {", ".join(MULTI_OPTIONS)}",
 
     "predictors_file": "path/to/file",
-    "sample_column": "add sample column name"
+    "sample_column": "add sample column name",
     "predictors": "column names in predictors file (if empty, all colnames in predictor file will be used)",
     "predictors_intercept_0": "leave empty if NA",
     "predictor_random_effect": "leave empty if NA",
