@@ -46,7 +46,7 @@ def main(data: pd.DataFrame, results: dict, elements: list,
         terms = zip(elements, predictors)
     
     for element, predictors in terms:
-        print(element, predictors)
+
         intercept = add_intercept(predictors, config)
         
         formula = f"{element} ~ {predictors}{intercept}"
@@ -54,7 +54,8 @@ def main(data: pd.DataFrame, results: dict, elements: list,
         model = MODELS[config["model"]]
         model_res = model(data, formula, config)
         results = fill_storage(results, model_res,
-                            element, predictors)
+                            element, predictors,
+                            intercept)
     
     if config["correct_pvals"] == "yes":
         results = correct_pvals(results)

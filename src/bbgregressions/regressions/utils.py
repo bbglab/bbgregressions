@@ -27,7 +27,8 @@ def init_storage(elements: list,
 def fill_storage(results: dict,
                 model_res,
                 element: str,
-                predictors: str) -> dict:
+                predictors: str,
+                intercept: str) -> dict:
     """
     """
 
@@ -38,7 +39,10 @@ def fill_storage(results: dict,
         results["low_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][0]
         results["high_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][1]
         results["pval"].loc[element, predictor] = model_res.pvalues[predictor]
-        results["intercept"].loc[element, predictor] = model_res.params["Intercept"]
+        if intercept == " - 1":
+            results["intercept"].loc[element, predictor] = 0
+        elif intercept == " + 1":
+            results["intercept"].loc[element, predictor] = model_res.params["Intercept"]
         
     return results
 
@@ -50,7 +54,6 @@ def add_intercept(predictor_term: str,
     predictors_intercept_0 = config["predictors_intercept_0"]
     if not isinstance(predictors_intercept_0, list):
         predictors_intercept_0 = list(predictors_intercept_0)
-    
     for pred_int_0 in predictors_intercept_0:
         if pred_int_0 in predictor_term:
             intercept = " - 1"
