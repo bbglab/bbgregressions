@@ -44,8 +44,8 @@ def main(data: pd.DataFrame, results: dict, elements: list,
         terms = product(elements, predictors)
     elif mode == "multi":
         terms = zip(elements, predictors)
-
-    for element, predictors in zip(terms):
+    
+    for element, predictors in terms:
 
         intercept = add_intercept(predictors, config)
         
