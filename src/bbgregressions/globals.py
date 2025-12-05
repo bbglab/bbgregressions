@@ -95,3 +95,28 @@ CONFIG_TEMPLATE_GENERAL = {
     "correct_pvals": "select between yes or no",
     "significance_threshold": "leave empty if no multiple testing correction"
 }
+
+CONFIG_TEMPLATE_GENERAL = {
+    "output_dir": "/path/to/dir",
+    "handle_na": f"""select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])} 
+    (move this field to the specific metric section if you want a metric-specific NA handling)""",
+    "elements": "move this field to the specific metric section if the subset by elements is not general",
+    "samples": "move this field to the specific metric section if the subset by samples is not general",
+
+    "model": f"select between {", ".join(MODELS)}",
+    "multi": f"select between {", ".join(MULTI_OPTIONS)}",
+
+    "predictors_file": "path/to/file",
+    "sample_column": "add sample column name",
+    "predictors": "column names in predictors file (if empty, all colnames in predictor file will be used)",
+    "predictors_intercept_0": "leave empty if NA",
+    "predictor_random_effect": "leave empty if NA",
+    "predictors_multi_force": "leave empty if NA",
+    
+    "correct_pvals": "select between yes or no",
+    "significance_threshold": "leave empty if no multiple testing correction"
+}
+
+CONFIG_TEMPLATE_PLOT = {
+    
+}
