@@ -17,10 +17,6 @@ def main(config_file: str) -> None:
     config = read_yaml(config_file)
     config = config["general"]
 
-    output_dir = os.path.join(config["output_dir"], "regressions")
-    os.makedirs(output_dir, exist_ok = True) 
-    logger.info(f"Regression results will be stored in {output_dir}")
-
     # use existing inputs (check)
     inputs_dir = os.path.join(config["output_dir"], "input")
     if os.path.isdir(inputs_dir):
@@ -35,6 +31,8 @@ def main(config_file: str) -> None:
         logger.critical("Run/re-run bbgregressions create_input")
         raise IOError("No input directory")
     
+    logger.info(f"Model that will be run: {config['model']}")
+
     # load predictors
     predictors_data = pd.read_csv(config["predictors_file"], sep = "\t",
                                 index_col = config["sample_column"])
@@ -42,7 +40,7 @@ def main(config_file: str) -> None:
     logger.info(f"Predictors: {config['predictors']}")
 
     # calculate regressions per input
-    output_dir = os.path.join(config["output_dir"], "regressions")
+    output_dir = os.path.join(config["output_dir"], "regressions", config["model"])
     os.makedirs(output_dir, exist_ok = True) 
     logger.info(f"Model results will be stored in {output_dir}")
 
