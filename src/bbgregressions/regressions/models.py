@@ -57,7 +57,7 @@ def main(data: pd.DataFrame, results: dict, elements: list,
                             element, predictors,
                             intercept)
     
-    if config["correct_pvals"] == "yes":
+    if config["correct_pvals"]:
         results = correct_pvals(results)
     
     return results

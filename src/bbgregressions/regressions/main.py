@@ -74,7 +74,9 @@ def main(config_file: str) -> None:
             results[res_elem].to_csv(file, sep = "\t")
         
         # run multivariate model (if applicable)
-        if config["multi"] == "yes":
+        print(config["multi"])
+        print(config["correct_pvals"])
+        if config["multi"]:
             logger.info("Multivariate analysis selected. Continue.")
             output_dir_multi = os.path.join(output_dir, metric, "multivariate")
             os.makedirs(output_dir_multi, exist_ok = True) 

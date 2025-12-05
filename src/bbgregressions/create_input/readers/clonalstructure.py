@@ -28,7 +28,7 @@ def mutdensity(config: dict,
 
     # read filters
     metric = f'{config["metric_name"].upper()}_MB'
-    metric = f'{config["metric_name"].upper()}_ADJUSTED' if config["adjust"] == "yes" else metric
+    metric = f'{config["metric_name"].upper()}_ADJUSTED' if config["adjust"] else metric
     regions = MUTDENSITY_REGIONS if not config["region"] else config["region"]
     muttypes = MUTDENSITY_MUTTYPES.values() if not config["muttype"] else [
     MUTDENSITY_MUTTYPES[muttype] for muttype in config["muttype"] ]
@@ -94,8 +94,8 @@ def omega(config: dict,
     logger.info(f"\tGlobal loc mode: {config["global_loc"]}")
     logger.info(f"\tMulti mode: {config["multi"]}")
 
-    globalloc_label = "globalloc" if config["global_loc"] == "yes" else "no-globalloc"
-    multi_label = "multi" if config["multi"] == "yes" else "no-multi"
+    globalloc_label = "globalloc" if config["global_loc"] else "no-globalloc"
+    multi_label = "multi" if config["multi"] else "no-multi"
     sign_thres_label = "no-significance-thres" if config["significance_threshold"] == 1 else f"significance-thres-{sign_thres}"
     filters = f"{globalloc_label}.{multi_label}.{sign_thres_label}"
     formatter(data = data_f,

@@ -1,17 +1,17 @@
 metrics:
   metric_1:
-    metric_name: "mutdensity"
-    file: "data/bladder/all_mutdensities.tsv"
+    metric_name: mutdensity
+    file: data/bladder/all_mutdensities.tsv
     region: 
       - "protein_affecting"
       - "non_protein_affecting"
     muttype: 
-      - "snv"
-    adjust: "no"
+      - snv
+    adjust: no
     elements:
     samples:
-    elements_total_by: "mean"
-    samples_total_by: "included"
+    elements_total_by: mean
+    samples_total_by: included
 
   # metric_2:
   #   metric_name: "mutreadsdensity"
@@ -40,8 +40,8 @@ metrics:
     elements_total_by: included
     samples_total_by: included
 general:
-  output_dir: "./test/"
-  handle_na: "mean"
+  output_dir: ./test/
+  handle_na: mean
   elements:
   samples:
   model: linear
