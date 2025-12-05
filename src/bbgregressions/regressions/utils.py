@@ -97,7 +97,7 @@ def multi_rules(output_dir_uni: str,
     else:
         uni_file = os.path.join(output_dir_uni, "pval.tsv")
 
-    data = pd.read_csv(uni_file, sep = "\t")
+    data = pd.read_csv(uni_file, sep = "\t", index_col = 0)
     
     # elements analyzed
     elements = data.index.tolist()
