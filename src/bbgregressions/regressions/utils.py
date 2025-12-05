@@ -109,7 +109,7 @@ def multi_rules(output_dir_uni: str,
 
     # predictors forced to be included 
     force_rules = []
-    for rule in config["predictors_multi_forze"]:
+    for rule in config["predictors_multi_force"]:
         rule = {pred.strip() for pred in rule.split(",")}
         force_rules.append(rule)
 

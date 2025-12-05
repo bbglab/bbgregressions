@@ -45,7 +45,7 @@ general:
   elements:
   samples:
   model: linear
-  multi: no
+  multi: yes
   predictors_file: /data/bbg/projects/bladder_ts/data/complete_cohort/samples_metadata/20250430_metadata_bladder.tsv
   sample_column: SAMPLE_ID
   predictors: 
@@ -61,4 +61,4 @@ general:
   predictors_multi_force: 
   - is_male, history_smoking
   correct_pvals: yes
-  qval_threshold: 0.2
+  significance_threshold: 0.2
