@@ -21,6 +21,15 @@ def regressions_reader(directory: str) -> dict:
 
     return results
 
+def transposer(results: dict) -> dict:
+    """
+    """
+    results_t = {}
+    for res in results.keys():
+        results_t[res] = results[res].T
+
+    return results_t
+
 def grid_dims(config: dict,
             main_vars: list,
             coeff_vars: list) -> dict:
@@ -31,13 +40,15 @@ def grid_dims(config: dict,
     # height unit to maintain the pre-defined ratio
     unit = ratio * height    
     # subplot height given the y-axis variables
-    subplot_height = unit * coeff_vars
+    subplot_height = unit * len(coeff_vars)
     # max number of rows per grid
-    config["nrows"] = height // subplot_height
+    config["nrows"] = int(height // subplot_height)
+    if config["nrows"] < 1:
+        config["nrows"] = 1 # min 1 row
 
     n_subplots = config["ncols"] * config["nrows"]
-    n_pages = main_vars // n_subplots
-    if main_vars % n_subplots:
+    n_pages = len(main_vars) // n_subplots
+    if len(main_vars) % n_subplots:
         n_pages += 1
     config["pdf_pages"] = n_pages
     config["subplots_per_page"] = n_subplots
@@ -64,11 +75,6 @@ def add_customs(config: dict) -> dict:
         n_predictors = len(config["predictors"])
         colors = sns.color_palette("tab20").as_hex()[:n_predictors]
         config["predictors_colors"] = dict(zip(config["predictors"], colors))
-
-    # default names for elements
-    config["elements_name"]
-
-    # default color for elements
 
     return config
                         

@@ -5,7 +5,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from bbgregressions import __logger_name__
 
 from bbgregressions.utils.io import read_yaml
-from bbgregressions.plot.utils import regressions_reader, grid_dims, add_customs
+from bbgregressions.plot.utils import regressions_reader, grid_dims, add_customs, transposer
 from bbgregressions.plot.plots import coefplot
 from bbgregressions.globals import DEFAULT_CONFIG_PLOT 
 
@@ -51,7 +51,7 @@ def main(config_file: str) -> None:
             modes = os.listdir(metric_dir)
             for mode in modes:
                 logger.info(f"{mode} regressions exist. Creating pdf with plots.")
-                pdf_file = os.path.join(output_dir, model, metric, mode, f"{metric}.{mode}")
+                pdf_file = os.path.join(output_dir, model, metric, mode, f"{metric}.{mode}.pdf")
                 os.makedirs(os.path.dirname(pdf_file), exist_ok = True)
                 logger.info(f"pdf will be stored as {pdf_file}")
                 with PdfPages(pdf_file) as pdf:
@@ -74,11 +74,12 @@ def main(config_file: str) -> None:
                             config["names"] = config["predictors_names"]
                             config["titles"] = {elem: elem for elem in elements}
                         elif display == "pred_main":
+                            regressions_res = transposer(regressions_res)
                             main_vars = predictors
                             coeff_vars = elements
                             config["colors"] = {elem: "#C4BCB7" for elem in elements}
                             config["names"] = {elem: elem for elem in elements}
-                            config["title"] = config["predictors_names"]
+                            config["titles"] = config["predictors_names"]
 
                         # configure plot grid
                         config = grid_dims(config, main_vars, coeff_vars)

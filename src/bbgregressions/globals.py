@@ -124,7 +124,7 @@ CONFIG_TEMPLATE_PLOT = {
 
 DEFAULT_CONFIG_PLOT = {
     "ncols": 4,
-    "unit_height2height": 0.042, # don't change, visually defined
+    "unit_height2height": 0.04, # don't change, visually defined
     "fig_width": 16,
     "fig_height": 14,
     "coeffdot_size": 150,

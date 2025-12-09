@@ -13,7 +13,7 @@ def coefplot(results: dict,
                         figsize = (config["fig_width"], config["fig_height"]),
                         sharey = True)
     plt.suptitle(config["main_title"], fontsize = 14)
-    
+
     for main_var, ax in zip(main_vars, axs.flat):
 
         for i, coeff_var in enumerate(coeff_vars):
@@ -46,7 +46,7 @@ def coefplot(results: dict,
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlabel('Effect size')
-        ax.set_ylim(-1, len(coeff_vars.keys())+0.5)
+        ax.set_ylim(-1, len(coeff_vars)+0.5)
         ax.set_title(config["titles"][main_var])
 
     plt.tight_layout()
