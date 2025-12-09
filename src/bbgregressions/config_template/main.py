@@ -3,7 +3,7 @@ import daiquiri
 import copy
 
 from bbgregressions import __logger_name__
-from bbgregressions.globals import CONFIG_TEMPLATE_GENERAL
+from bbgregressions.globals import CONFIG_TEMPLATE_GENERAL, CONFIG_TEMPLATE_PLOT
 from bbgregressions.create_input.schemas.clonalstructure import *
 
 logger = daiquiri.getLogger(__logger_name__)
@@ -15,6 +15,7 @@ def main(metrics: list) -> None:
     config = {}
     config["metrics"] = {}
     config["general"] = CONFIG_TEMPLATE_GENERAL
+    config["plot"] = CONFIG_TEMPLATE_PLOT
 
     templates = [var for var in globals() if var.startswith("CONFIG_TEMPLATE_")]
     

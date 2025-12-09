@@ -12,7 +12,7 @@ def regressions_reader(directory: str) -> dict:
         files.remove("pval.tsv")
 
     for file in files:
-        name = file.split(".")[0]:
+        name = file.split(".")[0]
         if name in ["qval", "pval"]:
             name = "sign"
         

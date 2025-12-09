@@ -35,9 +35,15 @@ general:
   model: select between linear, linear-mixed-effects
   multi: select between yes, no
   predictors_file: path/to/file
+  sample_column: add sample column name
   predictors: column names in predictors file (if empty, all colnames in predictor
     file will be used)
   predictors_intercept_0: leave empty if NA
   predictor_random_effect: leave empty if NA
   predictors_multi_force: leave empty if NA
-  qval_threshold: leave empty if no multiple testing correction
+  correct_pvals: select between yes or no
+  significance_threshold: leave empty if no multiple testing correction
+plot:
+  predictors_names: (optional) add names for your predictors (same order as above)
+  predictors_colors: (optional) add color codes for your predictors (same order as
+    above)

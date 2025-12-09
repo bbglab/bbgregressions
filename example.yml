@@ -60,3 +60,6 @@ general:
   - is_male, history_smoking
   correct_pvals: yes
   significance_threshold: 0.2
+plot:
+  predictors_names: 
+  predictors_colors: 
