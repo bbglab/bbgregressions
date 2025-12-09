@@ -118,5 +118,15 @@ CONFIG_TEMPLATE_GENERAL = {
 }
 
 CONFIG_TEMPLATE_PLOT = {
-    
+    "predictors_names": "(optional) add names for your predictors (same order as above)",
+    "predictors_colors": "(optional) add color codes for your predictors (same order as above)",
+}
+
+DEFAULT_CONFIG_PLOT = {
+    "ncols": 4,
+    "unit_height2height": 0.042, # don't change, visually defined
+    "fig_width": 16,
+    "fig_height": 14,
+    "coeffdot_size": 150,
+    "coeffdot_linewidth": 2
 }
