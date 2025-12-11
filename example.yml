@@ -8,9 +8,7 @@ metrics:
     muttype: 
       - snv
     adjust: no
-    elements:
-    samples:
-    elements_total_by: mean
+    elements_total_by: included
     samples_total_by: included
 
   # metric_2:
@@ -29,7 +27,7 @@ metrics:
   metric_3:
     metric_name: omega
     file: data/bladder/all_omegas.tsv
-    global_loc: no
+    global_loc: yes
     multi: no
     impact:
     - missense
@@ -41,7 +39,7 @@ general:
   output_dir: ./test/
   handle_na: mean
   elements:
-  samples:
+  samples: '^P19_|^ALL_GENES$|^all_samples$'
   model: linear-mixed-effects
   multi: yes
   predictors_file: /data/bbg/projects/bladder_ts/data/complete_cohort/samples_metadata/20250430_metadata_bladder.tsv

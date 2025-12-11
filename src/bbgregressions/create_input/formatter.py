@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import re
 import daiquiri
 
 from bbgregressions.create_input.cleaner import clean_nan, clean_reps, handle_nan
@@ -18,6 +19,16 @@ def formatter(data: pd.DataFrame,
             output_dir: str) -> None:
     """
     """
+    
+    # check if elements and/or samples were provided as regex
+    if isinstance(elements, str):
+        regex = f'r"{elements}"'
+        allelements = data["element"].unique()
+        elements = [elem for elem in allelements if re.search(regex, elem)]
+    if isinstance(samples, str):
+        regex = samples
+        allsamples = data["sample"].unique()
+        samples = [sampl for sampl in allsamples if re.search(regex, sampl)]
 
     # pivot and reindex with selected elements and samples
     data_p = data.pivot(values = metric,
