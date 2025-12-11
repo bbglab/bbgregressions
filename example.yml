@@ -47,12 +47,12 @@ general:
   predictors_file: /data/bbg/projects/bladder_ts/data/complete_cohort/samples_metadata/20250430_metadata_bladder.tsv
   sample_column: SAMPLE_ID
   predictors: 
+  - age_decades
   - is_male
   - history_smoking
-  - had_prior_chemotherapy
   - history_drinking
-  - age_decades
   - bmi_scaled
+  - had_prior_chemotherapy
   predictors_intercept_0: 
   - age_decades
   predictor_random_effect: SUBJECT_ID
@@ -62,4 +62,16 @@ general:
   significance_threshold: 0.2
 plot:
   predictors_names: 
+  - Age (decade)
+  - Is Male
+  - Was/is smoker
+  - Was/is drinker
+  - BMI (0-1 scaled)
+  - Had prior chemotherapy
   predictors_colors: 
+  - "#F7645E"
+  - "#9EC9F9"
+  - "#B27DFA"
+  - "#C5FA8F"
+  - "#FACC79"
+  - "#FAEC82"

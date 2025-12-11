@@ -70,6 +70,7 @@ def main(config_file: str) -> None:
                         if display == "elem_main":
                             main_vars = elements
                             coeff_vars = predictors
+                            coeff_vars.reverse()
                             config["colors"] = config["predictors_colors"]
                             config["names"] = config["predictors_names"]
                             config["titles"] = {elem: elem for elem in elements}
