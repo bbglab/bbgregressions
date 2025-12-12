@@ -78,7 +78,7 @@ def omega(config: dict,
     # read filters
     impacts = OMEGA_IMPACTS if not config["impact"] else config["impact"]
     if not config["elements"]:
-        elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
+        # elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
         elements = [f"{elem}_{impact}" for impact in impacts for elem in elements]
     else:
         elements = config["elements"]
