@@ -92,5 +92,36 @@ def coefplot(config_file):
     logger.info(f"Reading user defined settings from {config_file}")
     coefplot_main(config_file)
 
+@bbgregressions.command(name='minipipeline',
+                        context_settings=dict(help_option_names=['-h', '--help']),
+                        help="Run create_input, regressions, and coefplot sequentially")
+@click.option('-config', '--config_file', type=click.Path(exists=True),
+            help='YAML file with config settings for the entire pipeline')
+@setup_logging_decorator
+def minipipeline(config_file):
+    """
+    Executes the full pipeline:
+    1. Builds input tables (create_input)
+    2. Runs regression models (regressions)
+    3. Plots the coefficients (coefplot)
+    """
+    startup_message(__version__, "Full Pipeline: input, regressions, and plot\n")
+    logger.info(f"Starting full pipeline using settings from {config_file}")
+
+    # 1. Run create_input
+    logger.info("--- Starting create_input (Module 1) ---")
+    create_input_main(config_file)
+    logger.info("--- create_input finished successfully ---")
+
+    # 2. Run regressions
+    logger.info("--- Starting regressions (Module 2) ---")
+    regressions_main(config_file)
+    logger.info("--- regressions finished successfully ---")
+
+    # 3. Run coefplot
+    logger.info("--- Starting coefplot (Module 3) ---")
+    coefplot_main(config_file)
+    logger.info("--- Full pipeline finished successfully ---")
+
 if __name__ == "__main__":
     bbgregressions() 
