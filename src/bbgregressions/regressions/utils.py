@@ -119,6 +119,13 @@ def multi_rules(output_dir_uni: str,
         sign_preds_upd, force_preds = update_predictors(sign_preds, force_rules)
         sign_predictors_upd.append(sign_preds_upd)
         forced_predictors.append(force_preds)
+    
+    logger.debug("Derived predictors per element in the univariate analysis:")
+    for elem, preds, upd_preds, force_preds in zip(elements, sign_predictors, sign_predictors_upd, forced_predictors):
+        logger.debug(f"Element: {elem}")
+        logger.debug(f"Predictors significant in univariate: {preds}")
+        logger.debug(f"Predictors after applying forcing rules: {upd_preds}")
+        logger.debug(f"Specific predictors that were exclusively enforced: {force_preds}")
         
     # remove elements for which there is no need to do the multi analysis
     elements_upd = []

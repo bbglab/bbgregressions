@@ -1,17 +1,5 @@
 metrics:
   metric_1:
-    metric_name: mutreadsdensity
-    file: /path/to/all_mutdensities.tsv
-    region:
-    - select between all, protein_affecting, non_protein_affecting, synonymous
-    - ''
-    muttype:
-    - select between all, snv, indel, snv_indel
-    - ''
-    adjust: select between yes, no
-    elements_total_by: select between none, included, sum, mean, median
-    samples_total_by: select between none, included, sum, mean, median
-  metric_2:
     metric_name: omega
     file: /path/to/file
     global_loc: select between yes, no
@@ -24,14 +12,26 @@ metrics:
       1)
     elements_total_by: select between none, included, sum, mean, median
     samples_total_by: select between none, included, sum, mean, median
+  metric_2:
+    metric_name: mutreadsdensity
+    file: /path/to/all_mutdensities.tsv
+    region:
+    - select between all, protein_affecting, non_protein_affecting, synonymous
+    - ''
+    muttype:
+    - select between all, snv, indel, snv_indel
+    - ''
+    adjust: select between yes, no
+    elements_total_by: select between none, included, sum, mean, median
+    samples_total_by: select between none, included, sum, mean, median
 general:
   output_dir: /path/to/dir
   handle_na: "select between ignore, mean, all_samples \n    (move this field to the\
     \ specific metric section if you want a metric-specific NA handling)"
-  elements: move this field to the specific metric section if the subset by elements
-    is not general
-  samples: move this field to the specific metric section if the subset by samples
-    is not general
+  elements: add list of elements or regex. Move this field to the specific metric
+    section if the subset by elements is not general
+  samples: add list of samples or regex. Move this field to the specific metric section
+    if the subset by samples is not general
   model: select between linear, linear-mixed-effects
   multi: select between yes, no
   predictors_file: path/to/file
