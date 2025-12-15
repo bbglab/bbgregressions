@@ -32,8 +32,6 @@ bbgregressions provides a command line interface (CLI) to perform various tasks.
 - `minipipeline`: runs `create_input`, `regressions`, and `plot coefplot` sequentially.
 `bbgregressions minipipeline -config <file.yml>`
 
-Add `-v` to any command for debug-level logs.
-
 Parameters:
 - `-config, --config_file`: path to the YAML file containing the configuration settings of the analysis (required).
 - `--metrics`: metrics you want to analyze (format: comma-separated without spaces). Note: if you want to create the template for the same metric to be filled with different values, input it as many times as needed.
@@ -41,8 +39,15 @@ Parameters:
 
 ### Configuration YAML
 
+bbgregressions uses a single YAML to configure the analysis. This config file also works as a tracker of the specificities of each of the analysis run.
 
+`config_template` provides a detailed template for analysis configuration. It is very important you follow the instructions detailed in the template. Following YAML conventions, the YAML reader will attempt to auto-detect data types, so do not quote any string/integer/float/etc unless otherwise specified. If you find the 'provide as a list' option, you need to fill in this field as a sequence collection. Example:
+```yaml
+impact:
+  - missense
+  - truncating
+```
 
-Notes:
-- Predictor metadata tab-delimited
-- Critical for config: what needs to be specified as list and what not
+## Maintainers
+
+- [Raquel Blanco](https://github.com/rblancomi)
