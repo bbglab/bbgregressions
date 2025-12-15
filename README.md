@@ -49,6 +49,16 @@ impact:
 ```
 Remember to delete the instructions from the YAML and only keep the selected values.
 
+<details>
+  <summary>YAML fields: detailed explanation</summary>
+  
+  The config YAML is divided in 3 sections:
+  - `metrics`: specific instructions to process each input file (metric).
+  - `general`: general instructions to process input files and to run the models.
+  - ``
+  
+</details>
+
 ## Maintainers
 
 - [Raquel Blanco](https://github.com/rblancomi)
