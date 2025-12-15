@@ -116,12 +116,14 @@ Note: one metric section will be created for each time a metric is specified in 
   * `low_ci.tsv`: lower bound of the confidence interval for each predictor-element combination coefficient.
   * `intercept.tsv`: intercept for each predictor-element combination.
   * `pval.tsv`: p-values for each predictor-element combination.
-  * `qval.tsv`: q-values for each predictor-element combination (generated when multiple testing correction is on).
+  * `qval.tsv`: q-values for each predictor-element combination (generated when multiple testing correction is on).  
+  
   The format of these files is:
   * Predictors as column names.
   * Elements as row names.
-  * Coefficient/p-value/CI/etc per sample-element combination in each cell.
+  * Coefficient/p-value/CI/etc per sample-element combination in each cell.  
   Results are separated in different directories according to model and mode (univariate or multivariate), all within the `<output_dir>/regressions/` directory.
+  
 - `plot coefplot`: generates one PDF per model-metric-mode regressions results with coefficient plots. Results are first displayed as element-centric and then as predictor-centric. 
 
 ## Maintainers
