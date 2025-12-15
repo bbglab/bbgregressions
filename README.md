@@ -7,10 +7,14 @@ bbgregressions is a software package designed to manage and execute **customized
 Install uv following the installation instructions in the [official uv site](https://docs.astral.sh/uv/getting-started/installation/).
 
 Clone the repository locally:
-`git clone https://github.com/bbglab/bbgregressions.git`
+```console
+git clone https://github.com/bbglab/bbgregressions.git
+```
 
 uv will manage project dependencies when you run the commands using `uv run`. Example:
-`uv run bbgregressions --help`
+```console
+uv run bbgregressions --help
+``
 
 ### Using Docker
 *WIP*
@@ -28,15 +32,23 @@ Regression analyses aim to uncover potential associations between variables, in 
 ### Commands
 
 - `config_template`: generates a YAML template with instruction on how to complete it. It will create one metric entry per value in metrics. Valid metrics (currently implemented): mutdensity, omega
-`bbgregressions config template --metrics <metric1,metric2,...>`
+```console
+bbgregressions config template --metrics <metric1,metric2,...>
+```
 - `create_input`: reads metric data, applies filters, and formats and writes per-metric input TSVs to `<output_dir>/input/`.
 `bbgregressions create_input -config <file.yml>`
 - `regressions`: loads formatted data in `<output_dir>/input/*` and runs the selected model; writes TSVs per metric and mode (univariate and/or multivariate).
-`bbgregressions regressions -config <file.yml>`
+```console
+bbgregressions regressions -config <file.yml>
+```
 - `plot coefplot`: builds per-model, per-metric, per-mode PDFs with coefficient visualization grids.
-`bbgregressions plot coefplot -config <file.yml>`
+```console
+bbgregressions plot coefplot -config <file.yml>
+``
 - `minipipeline`: runs `create_input`, `regressions`, and `plot coefplot` sequentially (recommended).
-`bbgregressions minipipeline -config <file.yml>`
+```console
+bbgregressions minipipeline -config <file.yml>
+```
 
 Parameters:
 - `-config, --config_file`: path to the YAML file containing the configuration settings of the analysis (required).
@@ -122,8 +134,9 @@ Note: one metric section will be created for each time a metric is specified in 
   * Predictors as column names.
   * Elements as row names.
   * Coefficient/p-value/CI/etc per sample-element combination in each cell.  
-  Results are separated in different directories according to model and mode (univariate or multivariate), all within the `<output_dir>/regressions/` directory.
   
+  Results are separated in different directories according to model and mode (univariate or multivariate), all within the `<output_dir>/regressions/` directory.
+
 - `plot coefplot`: generates one PDF per model-metric-mode regressions results with coefficient plots. Results are first displayed as element-centric and then as predictor-centric. 
 
 ## Maintainers
