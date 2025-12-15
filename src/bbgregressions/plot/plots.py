@@ -51,5 +51,4 @@ def coefplot(results: dict,
 
     plt.tight_layout()
     pdf.savefig()  # saves the current figure into a pdf page
-    plt.show()
     plt.close() 
