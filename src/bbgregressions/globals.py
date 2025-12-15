@@ -68,7 +68,7 @@ def startup_message(version, initializing_text):
 # ==============
 
 GENERAL_CONFIG_OPTIONS = {
-    "handle_na" : ["ignore", "mean", "all_samples"],
+    "handle_na" : ["ignore", "mean", "cohort"],
     "elements_total_by" : ["none", "included", "sum", "mean", "median"],
     "samples_total_by" : ["none", "included", "sum", "mean", "median"],
     "elements": "",
@@ -76,29 +76,43 @@ GENERAL_CONFIG_OPTIONS = {
 }
 
 CONFIG_TEMPLATE_GENERAL = {
-    "output_dir": "/path/to/dir",
-    "handle_na": f"""select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])} 
-    (move this field to the specific metric section if you want a metric-specific NA handling)""",
+    "output_dir": "/path/to/dir (will be created if it does not exist)", 
+    "handle_na": f"select between {", ".join(GENERAL_CONFIG_OPTIONS['handle_na'])} (move this field to the specific metric section if you want a metric-specific NA handling)",
     "elements": "add list of elements or regex. Move this field to the specific metric section if the subset by elements is not general",
     "samples": "add list of samples or regex. Move this field to the specific metric section if the subset by samples is not general",
 
     "model": f"select between {", ".join(MODELS)}",
     "multi": f"select between {", ".join(MULTI_OPTIONS)}",
 
-    "predictors_file": "path/to/file",
-    "sample_column": "add sample column name",
-    "predictors": "column names in predictors file (if empty, all colnames in predictor file will be used)",
-    "predictors_intercept_0": "leave empty if NA",
-    "predictor_random_effect": "leave empty if NA",
-    "predictors_multi_force": "leave empty if NA",
+    "predictors_file": "path/to/file (tab-delimited, predictors codified as 0/1 if binary)",
+    "sample_column": "add sample column name in predictors file",
+    "predictors": [
+        "column names in predictors file (if empty, all colnames in predictor file will be used)",
+        ""
+    ],
+    "predictors_intercept_0": [
+        "predictors for which to force intercept at 0 (leave empty if NA)",
+        ""
+    ],
+    "predictor_random_effect": "random effect variable for mixed-effects models (leave empty if NA)",
+    "predictors_multi_force": [
+        "predictors forced to be included together in multivariate analysis (leave empty if NA)",
+        ""
+    ],
     
     "correct_pvals": "select between yes or no",
     "significance_threshold": "leave empty if no multiple testing correction"
 }
 
 CONFIG_TEMPLATE_PLOT = {
-    "predictors_names": "(optional) add names for your predictors (same order as above)",
-    "predictors_colors": "(optional) add color codes for your predictors (same order as above)",
+    "predictors_names": [
+        "add names for your predictors (same order as above) (leave empty if NA)",
+        ""
+    ],
+    "predictors_colors": [
+        "add color codes for your predictors (same order as above) (leave empty if NA)",
+        ""
+    ]
 }
 
 DEFAULT_CONFIG_PLOT = {

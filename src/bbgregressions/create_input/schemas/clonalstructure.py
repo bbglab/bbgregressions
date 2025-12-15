@@ -16,7 +16,7 @@ CONFIG_TEMPLATE_MUTDENSITY = CONFIG_TEMPLATE_MUTREADSDENSITY = {
         f"select between {", ".join(MUTDENSITY_REGIONS)}",
         ""
     ],
-    f"muttype": [
+    "muttype": [
         f"select between {", ".join(MUTDENSITY_MUTTYPES)}",
         ""
     ],
