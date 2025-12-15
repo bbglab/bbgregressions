@@ -47,6 +47,7 @@ impact:
   - missense
   - truncating
 ```
+Remember to delete the instructions from the YAML and only keep the selected values.
 
 ## Maintainers
 
