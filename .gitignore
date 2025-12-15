@@ -419,5 +419,7 @@ FodyWeavers.xsd
 
 # testing files
 test.ipynb
-test/
-data/
+test/*
+data/*
+example.yml
+config.yml
