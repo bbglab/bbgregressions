@@ -14,7 +14,7 @@ git clone https://github.com/bbglab/bbgregressions.git
 uv will manage project dependencies when you run the commands using `uv run`. Example:
 ```console
 uv run bbgregressions --help
-``
+```
 
 ### Using Docker
 *WIP*
@@ -44,7 +44,7 @@ bbgregressions regressions -config <file.yml>
 - `plot coefplot`: builds per-model, per-metric, per-mode PDFs with coefficient visualization grids.
 ```console
 bbgregressions plot coefplot -config <file.yml>
-``
+```
 - `minipipeline`: runs `create_input`, `regressions`, and `plot coefplot` sequentially (recommended).
 ```console
 bbgregressions minipipeline -config <file.yml>
