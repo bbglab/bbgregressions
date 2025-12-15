@@ -77,6 +77,9 @@ def main(config_file: str) -> None:
             output_dir_multi = os.path.join(output_dir, metric, "multivariate")
             os.makedirs(output_dir_multi, exist_ok = True) 
 
+            # restart storage
+            results = init_storage(elements, predictors)
+
             elements, predictors, forced_predictors = multi_rules(output_dir_uni,
                                                                 config)
             results = run_model(data, results, elements, predictors, config,
