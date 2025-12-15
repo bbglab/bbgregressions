@@ -419,3 +419,5 @@ FodyWeavers.xsd
 
 # testing files
 test.ipynb
+test/
+data/
