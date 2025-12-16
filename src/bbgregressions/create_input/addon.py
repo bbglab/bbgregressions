@@ -30,11 +30,11 @@ def add_totals(data: pd.DataFrame,
             total = data.mean(axis = axis, skipna = True).to_frame(f"total_{opposite_ttype}")
         elif method == "median":
             total = data.median(axis = axis, skipna = True).to_frame(f"total_{opposite_ttype}")
-        
+
         if opposite_ttype == "sample":
             data = data.merge(total, right_index = True, left_index = True, how = "left")
         elif opposite_ttype == "element":
-            data = pd.concat([data, total], ignore_index = True)
+            data = pd.concat([data, total.T])
 
         logger.info(f"Method: {method}. The totals for each {ttype} are calculated as the {method} of all {opposite_ttype}s")
         logger.warning("Double check the totals were not already in the table")
