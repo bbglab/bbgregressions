@@ -32,6 +32,7 @@ def setup_logging_decorator(func):
         
         verbose_flag = ctx.parent.params.get('verbose', False)
         level = logging.DEBUG if verbose_flag else logging.INFO
+        logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
         formatter = daiquiri.formatter.ColorFormatter(fmt=FORMAT)
         
