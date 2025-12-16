@@ -70,7 +70,7 @@ def main(config_file: str) -> None:
                             mode = "uni")
         for res_elem in results:
             file = os.path.join(output_dir_uni, f"{res_elem}.tsv")
-            results[res_elem].to_csv(file, sep = "\t")
+            results[res_elem].dropna(axis = 0, how = "all").to_csv(file, sep = "\t")
         
         # run multivariate model (if applicable)
         if config["multi"]:
@@ -89,6 +89,6 @@ def main(config_file: str) -> None:
                 results = clean_multi(results, forced_predictors)
             for res_elem in results:
                 file = os.path.join(output_dir_multi, f"{res_elem}.tsv")
-                results[res_elem].to_csv(file, sep = "\t")
+                results[res_elem].dropna(axis = 0, how = "all").to_csv(file, sep = "\t")
     
     return None
