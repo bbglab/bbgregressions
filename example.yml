@@ -1,0 +1,101 @@
+metrics:
+  metric_1:
+    metric_name: mutdensity
+    file: data/bladder/all_mutdensities.tsv
+    region: 
+      - "protein_affecting"
+      - "non_protein_affecting"
+    muttype: 
+      - snv
+    adjust: no
+    elements_total_by: included
+    samples_total_by: included
+
+  # metric_2:
+  #   metric_name: "mutreadsdensity"
+  #   file: "/data/bbg/nobackup/bladder_ts/results/2025-11-16_deepCSA_updated_run/mutdensity/all_mutdensities.tsv"
+  #   region: 
+  #     - "protein_affecting"
+  #     - "non_protein_affecting"
+  #   muttype: 
+  #     - "snv"
+  #   adjust: "no"
+  #   elements:
+  #   samples:
+  #   elements_total_by: "included"
+  #   samples_total_by: "included"
+  metric_3:
+    metric_name: omega
+    file: data/bladder/omegas_paper.tsv
+    global_loc: yes
+    multi: no
+    impact:
+    - missense
+    - truncating
+    elements:
+    - KMT2D_truncating
+    - ARID1A_truncating
+    - KDM6A_truncating
+    - RBM10_truncating
+    - EP300_truncating
+    - STAG2_truncating
+    - CREBBP_truncating
+    - NOTCH2_truncating
+    - CDKN1A_truncating
+    - KMT2C_truncating
+    - KMT2D_missense
+    - ARID1A_missense
+    - KDM6A_missense
+    - RBM10_missense
+    - EP300_missense
+    - STAG2_missense
+    - CREBBP_missense
+    - NOTCH2_missense
+    - FOXQ1_missense
+    - CDKN1A_missense
+    - KMT2C_missense
+    - TP53_missense
+    - RB1_missense
+    significance_threshold: 1
+    elements_total_by: included
+    samples_total_by: included
+general:
+  output_dir: ./test/
+  handle_na: mean
+  elements:
+  samples: '^P19_|^ALL_GENES$|^all_samples$'
+  model: linear-mixed-effects
+  multi: yes
+  predictors_file: data/bladder/20250430_metadata_bladder.tsv
+  sample_column: SAMPLE_ID
+  predictors: 
+  - age_decades
+  - is_male
+  - history_smoking
+  - history_drinking
+  - bmi_scaled
+  - had_prior_chemotherapy
+  predictors_intercept_0: 
+  - age_decades
+  predictor_random_effect: SUBJECT_ID
+  predictors_multi_force: 
+  - is_male, history_smoking
+  - age_decades, bmi_scaled
+  - history_smoking, age_decades
+  correct_pvals: yes
+  significance_threshold: 0.2
+plot:
+  predictors_names: 
+  - Age (decade)
+  - Is Male
+  - Was/is smoker
+  - Was/is drinker
+  - BMI (0-1 scaled)
+  - Had prior chemotherapy
+  predictors_colors: 
+  - "#F7645E"
+  - "#9EC9F9"
+  - "#B27DFA"
+  - "#C5FA8F"
+  - "#FACC79"
+  - "#FAEC82"
