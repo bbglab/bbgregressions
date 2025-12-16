@@ -161,12 +161,12 @@ def multi_rules(output_dir_uni: str,
                 elements_upd.append(elem)
                 sign_predictors_upd2.append(sign_pred)
         
-        forced_predictors = []
+        forced_predictors_upd = []
     
     # format predictors for formula syntax
     sign_predictors_upd = ["+".join(pred) for pred in sign_predictors_upd2]
 
-    return (elements, sign_predictors_upd, forced_predictors)
+    return (elements_upd, sign_predictors_upd, forced_predictors_upd)
 
 def clean_multi(results: dict,
                 forced_predictors: list) -> dict:
