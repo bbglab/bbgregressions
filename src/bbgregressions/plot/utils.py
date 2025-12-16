@@ -38,13 +38,15 @@ def grid_dims(config: dict,
     height = config["fig_height"]
     ratio = config["unit_height2height"]
     # height unit to maintain the pre-defined ratio
-    unit = ratio * height    
+    unit = ratio * height 
     # subplot height given the y-axis variables
     subplot_height = unit * len(coeff_vars)
     # max number of rows per grid
     config["nrows"] = int(height // subplot_height)
     if config["nrows"] < 1:
         config["nrows"] = 1 # min 1 row
+    elif config["nrows"] > 6:
+        config["nrows"] = 5
 
     n_subplots = config["ncols"] * config["nrows"]
     n_pages = len(main_vars) // n_subplots
