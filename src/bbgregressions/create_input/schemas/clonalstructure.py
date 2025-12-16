@@ -9,7 +9,7 @@ MUTDENSITY_MUTTYPES = {"all": "all_types",
                     "snv_indel": "DELETION-INSERTION-SNV"}
 MUTDENSITY_ADJUSTMENT = ["yes", "no"]
 
-CONFIG_TEMPLATE_MUTDENSITY = CONFIG_TEMPLATE_MUTREADSDENSITY = {
+CONFIG_TEMPLATE_MUTDENSITY = {
     "metric_name": "mutdensity",
     "file": "/path/to/all_mutdensities.tsv",
     "region": [
@@ -25,6 +25,7 @@ CONFIG_TEMPLATE_MUTDENSITY = CONFIG_TEMPLATE_MUTREADSDENSITY = {
     "samples_total_by": f"select between {", ".join(GENERAL_CONFIG_OPTIONS['samples_total_by'])}"          
 }
 
+CONFIG_TEMPLATE_MUTREADSDENSITY = CONFIG_TEMPLATE_MUTDENSITY.copy()
 CONFIG_TEMPLATE_MUTREADSDENSITY["metric_name"] = "mutreadsdensity"
 
 # omega
