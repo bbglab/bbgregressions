@@ -43,8 +43,12 @@ def fill_storage(results: dict,
 
     predictors = predictors.split("+")
     for predictor in predictors:
-
-        results["coeff"].loc[element, predictor] = model_res.params[predictor]
+        
+        if np.isnan(model_res.pvalues[predictor]):
+            results["coeff"].loc[element, predictor] = np.nan
+            logger.warning(f"Model could not be computed for {element}-{predictor}. Results set to NA.")
+        else:
+            results["coeff"].loc[element, predictor] = model_res.params[predictor]
         results["low_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][0]
         results["high_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][1]
         results["pval"].loc[element, predictor] = model_res.pvalues[predictor]
