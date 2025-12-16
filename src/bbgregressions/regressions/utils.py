@@ -8,6 +8,15 @@ from bbgregressions import __logger_name__
 
 logger = daiquiri.getLogger(__logger_name__)
 
+def clean_input(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    """
+    
+    # remove "-" from column and row names 
+    data.columns = data.columns.str.replace('-', '_')
+    data.index = data.index.str.replace('-', '_')
+
+    return data
 
 def init_storage(elements: list,
                 predictors: list) -> dict:

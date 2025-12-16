@@ -5,7 +5,7 @@ import pandas as pd
 from bbgregressions import __logger_name__
 
 from bbgregressions.utils.io import read_yaml
-from bbgregressions.regressions.utils import init_storage, multi_rules, clean_multi
+from bbgregressions.regressions.utils import init_storage, multi_rules, clean_multi, clean_input
 from bbgregressions.regressions.models import main as run_model
 
 logger = daiquiri.getLogger(__logger_name__)
@@ -49,6 +49,7 @@ def main(config_file: str) -> None:
         metric = ".".join(file.split(".")[:-1])
         file = os.path.join(inputs_dir, file)
         data = pd.read_csv(file, sep = "\t", index_col = 0)
+        data = clean_input(data)
         logger.info(f"Running model for: {metric}")
 
         # init storage dataframes

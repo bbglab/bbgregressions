@@ -422,4 +422,4 @@ test.ipynb
 test/*
 data/*
 # example.yml
-config.yml
+config*.yml
