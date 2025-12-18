@@ -45,8 +45,12 @@ def handle_nan(data: pd.DataFrame,
         logger.info("Option: mean. NAs filled with mean per element")
         data = data.apply(lambda row: row.fillna(row.mean()), axis = 1)
     elif config["handle_na"] == "cohort":
-        logger.info("Option: all_samples. NAs filled with the all_samples value per elements")
-        data = data.apply(lambda col: col.fillna(data["all_samples"]))
+        logger.info("Option: cohort. NAs filled with the totals value per elements")
+        if "all_samples" in data.columns:
+            total_col = "all_samples"
+        else:
+            total_col = "total_sample"
+        data = data.apply(lambda col: col.fillna(data[total_col]))
     
     return data
 

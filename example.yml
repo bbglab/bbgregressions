@@ -61,7 +61,7 @@ metrics:
     samples_total_by: included
 general:
   output_dir: ./test/
-  handle_na: mean
+  handle_na: ignore
   elements:
   samples: '^P19_|^ALL_GENES$|^all_samples$'
   model: linear-mixed-effects
