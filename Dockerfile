@@ -10,7 +10,7 @@ WORKDIR /bbgregressions
 # Stage necessary files into the container
 COPY uv.lock /bbgregressions/uv.lock
 COPY pyproject.toml /bbgregressions/pyproject.toml
-COPY bbgregressions /bbgregressions/src/bbgregressions
+COPY src /bbgregressions/src
 COPY LICENSE /bbgregressions/LICENSE
 COPY README.md /bbgregressions/README.md
 
