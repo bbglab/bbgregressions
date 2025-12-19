@@ -1,8 +1,17 @@
 [project]
 name = "bbgregressions"
 version = "0.1.0"
-description = "Add your description here"
+description = "Customized statistical regressions analysis"
 readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Barcelona Biomedical Genomics Lab", email = "bbglab@irbbarcelona.org"}]
+maintainers = [
+    {name = "Raquel Blanco", email = "raquel.blanco@irbbarcelona.org"}
+]
+keywords = ["bbgregressions", "deepcsa"]
+
+
 requires-python = ">=3.13"
 dependencies = [
     "click>=8.3.1",
@@ -13,14 +22,16 @@ dependencies = [
     "statsmodels>=0.14.5",
 ]
 
-# --- ADD THESE SECTIONS MANUALLY ---
 
-# 1. This creates the 'bbgregressions' terminal command
 [project.scripts]
 bbgregressions = "bbgregressions.main:bbgregressions" 
 
+[tool.uv]
+package = true
 
-# 2. This defines the build backend (Standard for uv projects)
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "cython==0.29.36"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/bbgregressions/__init__.py"
