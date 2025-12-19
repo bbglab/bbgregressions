@@ -1,10 +1,11 @@
-import yaml
-import daiquiri
 import copy
 
-from bbgregressions import __logger_name__
-from bbgregressions.globals import CONFIG_TEMPLATE_GENERAL, CONFIG_TEMPLATE_PLOT
-from bbgregressions.create_input.schemas.clonalstructure import *
+import daiquiri
+import yaml
+
+from src import __logger_name__
+from src.create_input.schemas.clonalstructure import *
+from src.globals import CONFIG_TEMPLATE_GENERAL, CONFIG_TEMPLATE_PLOT
 
 logger = daiquiri.getLogger(__logger_name__)
 

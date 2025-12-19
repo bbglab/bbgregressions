@@ -1,20 +1,19 @@
-import daiquiri
 import os
+
+import daiquiri
 from matplotlib.backends.backend_pdf import PdfPages
 
-from bbgregressions import __logger_name__
-
-from bbgregressions.utils.io import read_yaml
-from bbgregressions.plot.utils import regressions_reader, grid_dims, add_customs, transposer
-from bbgregressions.plot.plots import coefplot
-from bbgregressions.globals import DEFAULT_CONFIG_PLOT 
-
+from src import __logger_name__
+from src.globals import DEFAULT_CONFIG_PLOT
+from src.plot.plots import coefplot
+from src.plot.utils import add_customs, grid_dims, regressions_reader, transposer
+from src.utils.io import read_yaml
 
 logger = daiquiri.getLogger(__logger_name__)
 
+
 def main(config_file: str) -> None:
-    """
-    """
+    """ """
 
     config = read_yaml(config_file)
     config_general = config["general"]
@@ -34,9 +33,9 @@ def main(config_file: str) -> None:
         logger.critical("Regressions directory does not exist. Aborting run")
         logger.critical("Run/re-run bbgregressions regressions")
         raise IOError("No regressions directory")
-    
+
     output_dir = os.path.join(config["output_dir"], "plot")
-    os.makedirs(output_dir, exist_ok = True) 
+    os.makedirs(output_dir, exist_ok=True)
     logger.info(f"Plots will be stored in {output_dir}")
 
     # make plots per model, per metric, per mode
@@ -52,10 +51,9 @@ def main(config_file: str) -> None:
             for mode in modes:
                 logger.info(f"{mode} regressions exist. Creating pdf with plots.")
                 pdf_file = os.path.join(output_dir, model, metric, mode, f"{metric}.{mode}.pdf")
-                os.makedirs(os.path.dirname(pdf_file), exist_ok = True)
+                os.makedirs(os.path.dirname(pdf_file), exist_ok=True)
                 logger.info(f"pdf will be stored as {pdf_file}")
                 with PdfPages(pdf_file) as pdf:
-
                     # load regression results
                     mode_dir = os.path.join(metric_dir, mode)
                     regressions_res = regressions_reader(mode_dir)
@@ -84,14 +82,12 @@ def main(config_file: str) -> None:
 
                         # configure plot grid
                         config = grid_dims(config, main_vars, coeff_vars)
-                        
+
                         # make plots
                         n0 = 0
                         n1 = config["subplots_per_page"]
                         for page in range(config["pdf_pages"]):
-                            coefplot(regressions_res, config, 
-                                    main_vars[n0:n1], coeff_vars,
-                                    pdf)
+                            coefplot(regressions_res, config, main_vars[n0:n1], coeff_vars, pdf)
                             n0 = n1
                             n1 += config["subplots_per_page"]
 

@@ -1,12 +1,13 @@
 import os
+
 import daiquiri
 import pandas as pd
 
-from bbgregressions import __logger_name__
-
-from bbgregressions.utils.io import read_yaml
-from bbgregressions.regressions.utils import init_storage, multi_rules, clean_multi, clean_input
-from bbgregressions.regressions.models import main as run_model
+from src import __logger_name__
+from src.regressions.models import main as run_model
+from src.regressions.utils import (clean_input, clean_multi, init_storage,
+                                   multi_rules)
+from src.utils.io import read_yaml
 
 logger = daiquiri.getLogger(__logger_name__)
 

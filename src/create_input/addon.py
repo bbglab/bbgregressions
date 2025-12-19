@@ -2,7 +2,7 @@ import pandas as pd
 
 import daiquiri
 
-from bbgregressions import __logger_name__
+from src import __logger_name__
 
 logger = daiquiri.getLogger(__logger_name__)
 
