@@ -9,7 +9,6 @@ dependencies = [
     { name = "click" },
     { name = "daiquiri" },
     { name = "pandas" },
-    { name = "ps" },
     { name = "pyyaml" },
     { name = "seaborn" },
     { name = "statsmodels" },

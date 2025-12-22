@@ -4,6 +4,10 @@ FROM ghcr.io/astral-sh/uv:0.5-python3.13-bookworm-slim
 # Set environment variables
 ENV UV_COMPILE_BYTECODE=1
 
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y git libcurl4-openssl-dev procps
+
 # Set the working directory to /bbgregressions
 WORKDIR /bbgregressions
 
