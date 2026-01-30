@@ -5,4 +5,5 @@ METRIC2READER = {
     "mutreadsdensity": mutdensity,
     # "oncodrivefml": oncodrivefml,
     "omega": omega,
+    "dominance": dominance,
 }
