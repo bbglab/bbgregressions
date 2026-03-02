@@ -80,7 +80,7 @@ def omega(config: dict, output_dir: str) -> pd.DataFrame:
     impacts = OMEGA_IMPACTS if not config["impact"] else config["impact"]
     if not config["elements"]:
         # elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
-        elements = [f"{elem}_{impact}" for impact in impacts for elem in elements]
+        elements = [f"{elem}_{impact}" for impact in impacts for elem in data["element"].unique()]
     else:
         elements = config["elements"]
     samples = data["sample"].unique() if not config["samples"] else config["samples"]
