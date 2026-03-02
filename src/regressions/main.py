@@ -76,24 +76,25 @@ def main(config_file: str) -> None:
         # run multivariate model (if applicable)
         if config["multi"]:
             logger.info("Multivariate analysis selected. Continue.")
-            output_dir_multi = os.path.join(output_dir, metric, "multivariate")
-            os.makedirs(output_dir_multi, exist_ok = True) 
-
-            # restart storage
-            results = init_storage(elements, predictors)
-
+            
             elements, predictors, forced_predictors = multi_rules(output_dir_uni,
                                                                 config)
-            print(elements)
-            print(predictors)
-            print(forced_predictors)
             
-            results = run_model(data, results, elements, predictors, config,
-                                mode = "multi")
-            if forced_predictors:
-                results = clean_multi(results, forced_predictors)
-            for res_elem in results:
-                file = os.path.join(output_dir_multi, f"{res_elem}.tsv")
-                results[res_elem].dropna(axis = 0, how = "all").to_csv(file, sep = "\t")
+            if not elements or predictors:
+                logger.info("Multivariate analysis not possible: no remaining variables after applying rules")
+            
+            else:
+                output_dir_multi = os.path.join(output_dir, metric, "multivariate")
+                os.makedirs(output_dir_multi, exist_ok = True) 
+                # restart storage
+                results = init_storage(elements, predictors)
+
+                results = run_model(data, results, elements, predictors, config,
+                                    mode = "multi")
+                if forced_predictors:
+                    results = clean_multi(results, forced_predictors)
+                for res_elem in results:
+                    file = os.path.join(output_dir_multi, f"{res_elem}.tsv")
+                    results[res_elem].dropna(axis = 0, how = "all").to_csv(file, sep = "\t")
     
     return None
