@@ -64,14 +64,22 @@ def add_intercept(predictor_term: str,
     """
     """
 
+    # no predictors to force a 0 intercept in config
+    if config["predictors_intercept_0"] is None:
+        intercept = " + 1"
+        return intercept
+
+    # if predictors contain at least one that requires zero intercept forcing, force it
     predictors_intercept_0 = config["predictors_intercept_0"]
     if not isinstance(predictors_intercept_0, list):
         predictors_intercept_0 = list(predictors_intercept_0)
     for pred_int_0 in predictors_intercept_0:
         if pred_int_0 in predictor_term:
             intercept = " - 1"
-        else:
-            intercept = " + 1"
+            return intercept
+
+    # otherwise, intercept can be calculated    
+    intercept = " + 1"
 
     return intercept
 
