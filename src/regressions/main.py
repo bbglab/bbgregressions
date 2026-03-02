@@ -84,6 +84,10 @@ def main(config_file: str) -> None:
 
             elements, predictors, forced_predictors = multi_rules(output_dir_uni,
                                                                 config)
+            print(elements)
+            print(predictors)
+            print(forced_predictors)
+            
             results = run_model(data, results, elements, predictors, config,
                                 mode = "multi")
             if forced_predictors:
