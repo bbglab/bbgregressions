@@ -76,18 +76,16 @@ def main(config_file: str) -> None:
         # run multivariate model (if applicable)
         if config["multi"]:
             logger.info("Multivariate analysis selected. Continue.")
-            
+            # restart storage
+            results = init_storage(elements, predictors)
             elements, predictors, forced_predictors = multi_rules(output_dir_uni,
                                                                 config)
-            
-            if not elements or predictors:
+            if not elements or not predictors:
                 logger.info("Multivariate analysis not possible: no remaining variables after applying rules")
             
             else:
                 output_dir_multi = os.path.join(output_dir, metric, "multivariate")
                 os.makedirs(output_dir_multi, exist_ok = True) 
-                # restart storage
-                results = init_storage(elements, predictors)
 
                 results = run_model(data, results, elements, predictors, config,
                                     mode = "multi")
