@@ -60,7 +60,7 @@ metrics:
     elements_total_by: included
     samples_total_by: included
 general:
-  output_dir: ./test/deepcsa_implementation/testing-dissapearing-dirs
+  output_dir: ./test/
   handle_na: ignore
   elements:
   samples: '^P19_|^ALL_GENES$|^all_samples$'
