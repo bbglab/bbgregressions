@@ -41,7 +41,7 @@ def main(config_file: str) -> None:
     # make plots per model, per metric, per mode
     models = os.listdir(regres_dir)
     for model in models:
-        logger.info(f"Plots for {model}")
+        logger.info(f"Plots for {model} models")
         model_dir = os.path.join(regres_dir, model)
         metrics = os.listdir(model_dir)
         for metric in metrics:
