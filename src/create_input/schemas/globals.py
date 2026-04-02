@@ -6,4 +6,5 @@ METRIC2READER = {
     # "oncodrivefml": oncodrivefml,
     "omega": omega,
     "dominance": dominance,
+    "PMB": PMB,
 }

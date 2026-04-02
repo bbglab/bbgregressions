@@ -152,3 +152,43 @@ def dominance(config: dict, output_dir: str) -> pd.DataFrame:
     )
 
 
+def PMB(config: dict, output_dir: str) -> pd.DataFrame:
+    """
+    # MODIFY
+    Reads and filters mutdensity and mutreadsdensity
+    data from deepCSA. Calls formatter to produce
+    a regressions input table for each filtering combination
+
+    Parameters
+    ----------
+    config: dict
+        filtering info and file name
+
+    """
+
+    # load data
+    data = pd.read_csv(config["file"], sep=",")
+    data = data.rename({"SYMBOL": "element", "IRB_patient_id": "sample"}, axis=1)
+
+    # read filters
+    metric = f"{config['metric_name']}"
+    elements = data["element"].unique() if not config["elements"] else config["elements"]
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
+
+    # prepare for formatter
+
+    logger.info("Generating table")
+    filters = "no-filters"
+    
+    formatter(
+        data=data,
+        metric=metric,
+        filters=filters,
+        config=config,
+        elements=elements,
+        samples=samples,
+        output_dir=output_dir,
+    )
+
+
+
