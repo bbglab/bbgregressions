@@ -62,11 +62,15 @@ def fill_storage(results: dict,
 def add_intercept(predictor_term: str, 
             config: dict) -> str:
     """
+    # TODO
+    # FIXME
+    this was giving problems and I ended up with some hardcoding, revise what's the best way to solve it
     """
 
+    intercept = " + 1"
     predictors_intercept_0 = config["predictors_intercept_0"]
     if not isinstance(predictors_intercept_0, list):
-        predictors_intercept_0 = list(predictors_intercept_0)
+        predictors_intercept_0 = [] # list(predictors_intercept_0)
     for pred_int_0 in predictors_intercept_0:
         if pred_int_0 in predictor_term:
             intercept = " - 1"
