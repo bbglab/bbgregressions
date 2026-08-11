@@ -423,3 +423,4 @@ test/*
 data/*
 # example.yml
 config*.yml
+.vscode/*

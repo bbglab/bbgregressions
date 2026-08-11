@@ -112,3 +112,46 @@ def omega(config: dict, output_dir: str) -> pd.DataFrame:
     )
 
     return None
+
+
+
+def depths(config: dict, output_dir: str) -> pd.DataFrame:
+    """
+    Reads and filters depths data from deepCSA.
+    Calls formatter to produce a regressions input
+    table for each filtering combination
+
+    Parameters
+    ----------
+    config: dict
+        filtering info and file name
+
+    """
+
+    # load data
+    data = pd.read_csv(config["file"], sep="\t")
+    data = data.rename({"GENE": "element", "SAMPLE_ID": "sample", "MEAN_GENE_DEPTH": "depth"}, axis=1)
+
+    # read filters
+    if not config["elements"]:
+        # elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
+        elements = [f"{elem}" for elem in elements]
+    else:
+        elements = config["elements"]
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
+
+    # filter data and prepare for formatter
+    logger.info("Generating table with the depths information")
+
+    filters = f"mean"
+    formatter(
+        data=data,
+        metric=config["metric_name"],
+        filters=filters,
+        config=config,
+        elements=elements,
+        samples=samples,
+        output_dir=output_dir,
+    )
+
+    return None
