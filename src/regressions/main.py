@@ -45,6 +45,22 @@ def main(config_file: str) -> None:
     os.makedirs(output_dir, exist_ok = True) 
     logger.info(f"Model results will be stored in {output_dir}")
 
+    if 'depth.mean.tsv' in inputs:
+        file = 'depth.mean.tsv'
+        depths_info = True
+        logger.info("Depth metric detected. Will be used as predictor in the model")
+        metric = ".".join(file.split(".")[:-1])
+        file = os.path.join(inputs_dir, file)
+        depths_data = pd.read_csv(file, sep = "\t", index_col = 0)
+        depths_data = clean_input(depths_data)
+        depths_data.columns = [f"{col}_mean_depth" for col in depths_data.columns]
+        logger.info(f"Running model for: {metric}")
+        inputs.remove('depth.mean.tsv')
+    else:
+        depths_info = False
+        logger.info("Depth metric not detected. Will not be used as predictor in the model")
+
+
     for file in inputs:
 
         metric = ".".join(file.split(".")[:-1])
@@ -59,6 +75,9 @@ def main(config_file: str) -> None:
         results = init_storage(elements, predictors)
 
         # merge with predictors
+        if depths_info:
+            data = data.merge(depths_data, right_index = True, 
+                            left_index = True, how = "left")
         data = data.merge(predictors_data, right_index = True, 
                         left_index = True, how = "left")
 
@@ -68,7 +87,8 @@ def main(config_file: str) -> None:
         os.makedirs(output_dir_uni, exist_ok = True) 
 
         results = run_model(data, results, elements, predictors, config,
-                            mode = "uni")
+                            mode = "uni", depths_info = depths_info
+                            )
         for res_elem in results:
             file = os.path.join(output_dir_uni, f"{res_elem}.tsv")
             results[res_elem].dropna(axis = 0, how = "all").to_csv(file, sep = "\t")
@@ -85,7 +105,7 @@ def main(config_file: str) -> None:
             elements, predictors, forced_predictors = multi_rules(output_dir_uni,
                                                                 config)
             results = run_model(data, results, elements, predictors, config,
-                                mode = "multi")
+                                mode = "multi", depths_info = depths_info)
             if forced_predictors:
                 results = clean_multi(results, forced_predictors)
             for res_elem in results:
