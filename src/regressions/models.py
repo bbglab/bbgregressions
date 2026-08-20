@@ -53,7 +53,7 @@ def main(data: pd.DataFrame, results: dict, elements: list, predictors: list, co
         intercept = add_intercept(predictors, config)
 
         formula = f"{element} ~ {predictors}{intercept}"
-        if '+mean_depth' or ' mean_depth' in formula:
+        if '+mean_depth' in formula or ' mean_depth' in formula:
             logger.info(f"Running model for: {element} with depth as predictor")
             formula = formula.replace("+mean_depth", f"+{element.split('_')[0]}_mean_depth").replace(" mean_depth", f" {element.split('_')[0]}_mean_depth")
         logger.debug(f"Running: {formula}")
