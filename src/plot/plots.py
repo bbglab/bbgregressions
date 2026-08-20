@@ -26,17 +26,17 @@ def coefplot(results: dict,
 
             # plot dot + confidence interval
             ax.scatter(results["coeff"].loc[main_var][coeff_var], i, 
-                    color = config["colors"][coeff_var],
+                    color = config["colors"].get(coeff_var, "grey"),
                     s = config["coeffdot_size"], edgecolors = edgecolors, 
                     linewidths = config["coeffdot_linewidth"])
             ax.hlines(i, 
                     results["low_ci"].loc[main_var][coeff_var],
                     results["high_ci"].loc[main_var][coeff_var],
-                    color = config["colors"][coeff_var])
+                    color = config["colors"].get(coeff_var, "grey"))
 
         # add labels
         y_ticks = [i for i in range(len(coeff_vars))]
-        y_labels = [config["names"][coeff_var] for coeff_var in coeff_vars]
+        y_labels = [config["names"].get(coeff_var, coeff_var) for coeff_var in coeff_vars]
         ax.set_yticks(y_ticks, y_labels)
 
         # set zero effect 
@@ -47,7 +47,7 @@ def coefplot(results: dict,
         ax.spines['right'].set_visible(False)
         ax.set_xlabel('Effect size')
         ax.set_ylim(-1, len(coeff_vars)+0.5)
-        ax.set_title(config["titles"][main_var])
+        ax.set_title(config["titles"].get(main_var, main_var))
 
     plt.tight_layout()
     pdf.savefig()  # saves the current figure into a pdf page
