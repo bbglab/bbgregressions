@@ -42,7 +42,10 @@ def grid_dims(config: dict,
     # subplot height given the y-axis variables
     subplot_height = unit * len(coeff_vars)
     # max number of rows per grid
-    config["nrows"] = int(height // subplot_height)
+    if subplot_height == 0:
+        config["nrows"] = 1
+    else:
+        config["nrows"] = int(height // subplot_height)
     if config["nrows"] < 1:
         config["nrows"] = 1 # min 1 row
     elif config["nrows"] > 6:

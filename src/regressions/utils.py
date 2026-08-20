@@ -24,7 +24,7 @@ def init_storage(elements: list,
     """
 
     res_elements = ["coeff", "low_ci", "high_ci", 
-                    "pval", "intercept"]
+                    "pval", "intercept", "nobs"]
     results = {}
     
     for res_elem in res_elements:
@@ -45,6 +45,9 @@ def fill_storage(results: dict,
     for predictor in predictors:
         if "_mean_depth" in predictor:
             predictor_name = "mean_depth"
+        elif predictor == "mean_depth":
+            predictor_name = "mean_depth"
+            predictor = f'{element.split("_")[0]}_mean_depth'
         else:
             predictor_name = predictor
         
@@ -55,6 +58,7 @@ def fill_storage(results: dict,
             results["coeff"].loc[element, predictor_name] = model_res.params[predictor]
         results["low_ci"].loc[element, predictor_name] = model_res.conf_int().loc[predictor][0]
         results["high_ci"].loc[element, predictor_name] = model_res.conf_int().loc[predictor][1]
+        results["nobs"].loc[element, predictor_name] = model_res._results.nobs
         results["pval"].loc[element, predictor_name] = model_res.pvalues[predictor]
         if intercept == " - 1":
             results["intercept"].loc[element, predictor_name] = 0

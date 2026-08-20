@@ -36,23 +36,26 @@ def main(data: pd.DataFrame, results: dict, elements: list, predictors: list, co
     if mode == "uni":
         terms = product(elements, predictors)
         if depths_info:
-            new_terms = [(e, f"{e}_mean_depth") for e in elements if f"{e}_mean_depth" in data.columns]
+            new_terms = [(e, f"{e.split('_')[0]}_mean_depth") for e in elements if f"{e.split('_')[0]}_mean_depth" in data.columns]
             terms = list(terms) + new_terms
             if len(new_terms) < len(elements):
-                logger.warning(f"Depth metric was not available for: {', '.join([e for e in elements if f'{e}_mean_depth' not in data.columns])}. Will be used only for those with available data.")
+                logger.warning(f"Depth metric was not available for: {', '.join([e for e in elements if f'{e.split('_')[0]}_mean_depth' not in data.columns])}. Will be used only for those with available data.")
     elif mode == "multi":
         terms = zip(elements, predictors)
         if depths_info:
-            new_terms = [(e, f"{e}_mean_depth") for e in elements if f"{e}_mean_depth" in data.columns]
+            new_terms = [(e, f"{e.split('_')[0]}_mean_depth") for e in elements if f"{e.split('_')[0]}_mean_depth" in data.columns]
             terms = list(terms) + new_terms
             if len(new_terms) < len(elements):
-                logger.warning(f"Depth metric was not available for: {', '.join([e for e in elements if f'{e}_mean_depth' not in data.columns])}. Will be used only for those with available data.")
+                logger.warning(f"Depth metric was not available for: {', '.join([e for e in elements if f'{e.split('_')[0]}_mean_depth' not in data.columns])}. Will be used only for those with available data.")
 
 
     for element, predictors in terms:
         intercept = add_intercept(predictors, config)
 
         formula = f"{element} ~ {predictors}{intercept}"
+        if '+mean_depth' or ' mean_depth' in formula:
+            logger.info(f"Running model for: {element} with depth as predictor")
+            formula = formula.replace("+mean_depth", f"+{element.split('_')[0]}_mean_depth").replace(" mean_depth", f" {element.split('_')[0]}_mean_depth")
         logger.debug(f"Running: {formula}")
         model = MODELS[config["model"]]
         model_res = model(data, formula, config)
