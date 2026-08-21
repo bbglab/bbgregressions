@@ -131,6 +131,7 @@ def depths(config: dict, output_dir: str) -> pd.DataFrame:
     # load data
     data = pd.read_csv(config["file"], sep="\t")
     data = data.rename({"GENE": "element", "SAMPLE_ID": "sample", "MEAN_GENE_DEPTH": "depth"}, axis=1)
+    data["depth"] = data["depth"] / 1000
 
     # read filters
     if not config["elements"]:
