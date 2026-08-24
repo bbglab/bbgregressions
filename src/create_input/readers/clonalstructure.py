@@ -128,6 +128,7 @@ def dominance(config: dict, output_dir: str) -> pd.DataFrame:
     """
 
     # load data
+
     data = pd.read_csv(config["file"], sep=",")
     data = data.rename({"SYMBOL": "element", "IRB_patient_id": "sample"}, axis=1)
 
@@ -151,6 +152,46 @@ def dominance(config: dict, output_dir: str) -> pd.DataFrame:
         output_dir=output_dir,
     )
 
+    return None
+
+def depths(config: dict, output_dir: str) -> pd.DataFrame:
+    """
+    Reads and filters depths data from deepCSA.
+    Calls formatter to produce a regressions input
+    table for each filtering combination
+    """
+
+    data = pd.read_csv(config["file"], sep="\t")
+    data = data.rename({"GENE": "element", "SAMPLE_ID": "sample", "MEAN_GENE_DEPTH": "depth"}, axis=1)
+    sample_depth = data.groupby("sample").agg({"GENE_SEQ": "sum", "GENE_SIZE": "sum"}).reset_index()
+    sample_depth["depth"] = sample_depth["GENE_SEQ"] / sample_depth["GENE_SIZE"]
+    sample_depth["element"] = 'ALLGENES'
+    data = pd.concat([data, sample_depth[["element", "sample", "depth"]]], axis=0)
+    data["depth"] = data["depth"] / 1000
+
+
+    # read filters
+    if not config["elements"]:
+        # elements = [elem for elem in data["element"].unique() if "--" not in elem] # removes sub-genic regions
+        elements = [f"{elem}" for elem in data["element"].unique()]
+    else:
+        elements = config["elements"]
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
+
+    # filter data and prepare for formatter
+    logger.info("Generating table with the depths information")
+
+    filters = f"mean"
+    formatter(
+        data=data,
+        metric=config["metric_name"],
+        filters=filters,
+        config=config,
+        elements=elements,
+        samples=samples,
+        output_dir=output_dir,
+    )
+    return None
 
 def PMB(config: dict, output_dir: str) -> pd.DataFrame:
     """
@@ -190,5 +231,4 @@ def PMB(config: dict, output_dir: str) -> pd.DataFrame:
         output_dir=output_dir,
     )
 
-
-
+    return None

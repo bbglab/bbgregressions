@@ -15,6 +15,11 @@ dependencies = [
     { name = "statsmodels" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "bbgregressions" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "click", specifier = ">=8.3.1" },
@@ -24,6 +29,9 @@ requires-dist = [
     { name = "seaborn", specifier = ">=0.13.2" },
     { name = "statsmodels", specifier = ">=0.14.5" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "bbgregressions", editable = "." }]
 
 [[package]]
 name = "click"

@@ -24,7 +24,7 @@ def init_storage(elements: list,
     """
 
     res_elements = ["coeff", "low_ci", "high_ci", 
-                    "pval", "intercept"]
+                    "pval", "intercept", "nobs"]
     results = {}
     
     for res_elem in res_elements:
@@ -43,30 +43,42 @@ def fill_storage(results: dict,
 
     predictors = predictors.split("+")
     for predictor in predictors:
+        if "_mean_depth" in predictor:
+            predictor_name = "mean_depth"
+        elif predictor == "mean_depth":
+            predictor_name = "mean_depth"
+            predictor = f'{element.split("_")[0]}_mean_depth'
+        else:
+            predictor_name = predictor
         
         if np.isnan(model_res.pvalues[predictor]):
-            results["coeff"].loc[element, predictor] = np.nan
+            results["coeff"].loc[element, predictor_name] = np.nan
             logger.warning(f"Model could not be computed for {element}-{predictor}. Results set to NA.")
         else:
-            results["coeff"].loc[element, predictor] = model_res.params[predictor]
-        results["low_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][0]
-        results["high_ci"].loc[element, predictor] = model_res.conf_int().loc[predictor][1]
-        results["pval"].loc[element, predictor] = model_res.pvalues[predictor]
+            results["coeff"].loc[element, predictor_name] = model_res.params[predictor]
+        results["low_ci"].loc[element, predictor_name] = model_res.conf_int().loc[predictor][0]
+        results["high_ci"].loc[element, predictor_name] = model_res.conf_int().loc[predictor][1]
+        results["nobs"].loc[element, predictor_name] = model_res._results.nobs
+        results["pval"].loc[element, predictor_name] = model_res.pvalues[predictor]
         if intercept == " - 1":
-            results["intercept"].loc[element, predictor] = 0
+            results["intercept"].loc[element, predictor_name] = 0
         elif intercept == " + 1":
-            results["intercept"].loc[element, predictor] = model_res.params["Intercept"]
+            results["intercept"].loc[element, predictor_name] = model_res.params["Intercept"]
         
     return results
 
 def add_intercept(predictor_term: str, 
             config: dict) -> str:
     """
+    # TODO
+    # FIXME
+    this was giving problems and I ended up with some hardcoding, revise what's the best way to solve it
     """
 
+    intercept = " + 1"
     predictors_intercept_0 = config["predictors_intercept_0"]
     if not isinstance(predictors_intercept_0, list):
-        predictors_intercept_0 = list(predictors_intercept_0)
+        predictors_intercept_0 = [] # list(predictors_intercept_0)
     for pred_int_0 in predictors_intercept_0:
         if pred_int_0 in predictor_term:
             intercept = " - 1"

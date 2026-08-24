@@ -7,4 +7,5 @@ METRIC2READER = {
     "omega": omega,
     "dominance": dominance,
     "PMB": PMB,
+    "depth": depths,
 }

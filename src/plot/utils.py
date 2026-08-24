@@ -46,7 +46,10 @@ def grid_dims(config: dict,
         # Handle the error or set a default
         subplot_height = 1
     # max number of rows per grid
-    config["nrows"] = int(height // subplot_height)
+    if subplot_height == 0:
+        config["nrows"] = 1
+    else:
+        config["nrows"] = int(height // subplot_height)
     if config["nrows"] < 1:
         config["nrows"] = 1 # min 1 row
     elif config["nrows"] > 6:
@@ -64,6 +67,10 @@ def grid_dims(config: dict,
 def add_customs(config: dict) -> dict:
     """
     """
+    tobeadded = {"names": {}, "colors": {}}
+    if "Mean depth" in config["predictors_names"]:
+        tobeadded["names"]["mean_depth"] = "Mean depth"
+        tobeadded["colors"]["mean_depth"] = "#FA0EEE"
 
     # custom names for predictors
     if config["predictors_names"]:
@@ -81,6 +88,11 @@ def add_customs(config: dict) -> dict:
         n_predictors = len(config["predictors"])
         colors = sns.color_palette("tab20").as_hex()[:n_predictors]
         config["predictors_colors"] = dict(zip(config["predictors"], colors))
+
+    if tobeadded["names"]:
+        config["predictors_names"].update(tobeadded["names"])
+    if tobeadded["colors"]:
+        config["predictors_colors"].update(tobeadded["colors"])
 
     return config
                         
