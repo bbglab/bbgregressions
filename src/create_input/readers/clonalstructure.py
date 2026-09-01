@@ -113,11 +113,11 @@ def omega(config: dict, output_dir: str) -> pd.DataFrame:
 
     return None
 
-def dominance(config: dict, output_dir: str) -> pd.DataFrame:
+def dynamics(config: dict, output_dir: str) -> pd.DataFrame:
     """
     # MODIFY
-    Reads and filters mutdensity and mutreadsdensity
-    data from deepCSA. Calls formatter to produce
+    Reads and filters dynamics data from table provided as input.
+    Calls formatter to produce
     a regressions input table for each filtering combination
 
     Parameters
@@ -130,10 +130,59 @@ def dominance(config: dict, output_dir: str) -> pd.DataFrame:
     # load data
 
     data = pd.read_csv(config["file"], sep=",")
-    data = data.rename({"SYMBOL": "element", "IRB_patient_id": "sample"}, axis=1)
+    print(data.head())
+    data = data.rename({"SYMBOL": "element", "SAMPLE_ID": "sample"}, axis=1)
+
+    impacts = DYNAMICS_IMPACTS if not config["elements"] else data["impact"].unique()
+    metric = f"{config['metric_name']}"
+    elements = data["element"].unique() if not config["elements"] else config["elements"]
+
+    if not config["elements"]:
+        elements = [f"{elem}_{impact}" for impact in impacts for elem in elements]
+
+    samples = data["sample"].unique() if not config["samples"] else config["samples"]
+
+    # filter data and prepare for formatter
+    data_f = data.loc[data["impact"].isin(impacts)]
+    data_f["element"] = data_f.apply(lambda row: f"{row['element']}_{row['impact']}", axis=1)
+    logger.info("Generating table with these filter combination:")
+    logger.info(f"\tImpacts: {impacts}")
+
+    filters = "no-filters"
+    
+    formatter(
+        data=data_f,
+        metric=metric,
+        filters=filters,
+        config=config,
+        elements=elements,
+        samples=samples,
+        output_dir=output_dir,
+    )
+
+    return None
+
+def mutdensity_adj(config: dict, output_dir: str) -> pd.DataFrame:
+    """
+    # MODIFY
+    Reads and filters mutdensity adjusted data from table provided as input.
+    Calls formatter to produce
+    a regressions input table for each filtering combination
+
+    Parameters
+    ----------
+    config: dict
+        filtering info and file name
+
+    """
+
+    # load data
+
+    data = pd.read_csv(config["file"], sep="\t")
+    data = data.rename({"GENE": "element", "SAMPLE_ID": "sample"}, axis=1)
 
     # read filters
-    metric = f"{config['metric_name']}"
+    metric = f"{config['region']}"
     elements = data["element"].unique() if not config["elements"] else config["elements"]
     samples = data["sample"].unique() if not config["samples"] else config["samples"]
 
@@ -191,44 +240,4 @@ def depths(config: dict, output_dir: str) -> pd.DataFrame:
         samples=samples,
         output_dir=output_dir,
     )
-    return None
-
-def PMB(config: dict, output_dir: str) -> pd.DataFrame:
-    """
-    # MODIFY
-    Reads and filters mutdensity and mutreadsdensity
-    data from deepCSA. Calls formatter to produce
-    a regressions input table for each filtering combination
-
-    Parameters
-    ----------
-    config: dict
-        filtering info and file name
-
-    """
-
-    # load data
-    data = pd.read_csv(config["file"], sep=",")
-    data = data.rename({"SYMBOL": "element", "IRB_patient_id": "sample"}, axis=1)
-
-    # read filters
-    metric = f"{config['metric_name']}"
-    elements = data["element"].unique() if not config["elements"] else config["elements"]
-    samples = data["sample"].unique() if not config["samples"] else config["samples"]
-
-    # prepare for formatter
-
-    logger.info("Generating table")
-    filters = "no-filters"
-    
-    formatter(
-        data=data,
-        metric=metric,
-        filters=filters,
-        config=config,
-        elements=elements,
-        samples=samples,
-        output_dir=output_dir,
-    )
-
     return None

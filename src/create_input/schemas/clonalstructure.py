@@ -48,3 +48,10 @@ CONFIG_TEMPLATE_OMEGA = {
     "elements_total_by": f"select between {', '.join(GENERAL_CONFIG_OPTIONS['elements_total_by'])}",
     "samples_total_by": f"select between {', '.join(GENERAL_CONFIG_OPTIONS['samples_total_by'])}",
 }
+
+# dynamics
+DYNAMICS_IMPACTS = [
+    "all",
+    "missense",
+    "truncating"
+]
