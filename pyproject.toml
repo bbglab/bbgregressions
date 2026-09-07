@@ -29,9 +29,17 @@ bbgregressions = "src.main:bbgregressions"
 [tool.uv]
 package = true
 
+[tool.uv.sources]
+bbgregressions = { workspace = true }
+
 [build-system]
 requires = ["hatchling", "cython==0.29.36"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "bbgregressions",
+]
 
 [tool.hatch.version]
 path = "src/__init__.py"
